@@ -12,6 +12,7 @@ function SubmitButton() {
       type="submit"
       disabled={pending}
       className={styles.submitButton}
+      aria-live="polite"
     >
       {pending ? 'Signing In...' : 'Sign In'}
     </button>
@@ -24,9 +25,9 @@ export default function SignInForm() {
   const [state, formAction] = useActionState(signInPatient, initialState)
 
   return (
-    <form action={formAction}>
+    <form action={formAction} noValidate>
       {state?.error && (
-        <div className={styles.errorAlert} role="alert">
+        <div className={styles.errorAlert} role="alert" aria-live="assertive">
           {state.error}
         </div>
       )}
@@ -44,7 +45,8 @@ export default function SignInForm() {
           autoComplete="username"
           defaultValue={state?.mrn || ''}
           className={`${styles.input} ${state?.error ? styles.inputError : ''}`}
-          placeholder="e.g. MRN123456"
+          placeholder="e.g. AA-XXXXXX"
+          aria-invalid={!!state?.error}
         />
       </div>
 
@@ -61,12 +63,14 @@ export default function SignInForm() {
             maxLength={128}
             autoComplete="current-password"
             className={`${styles.input} ${styles.passwordInput} ${state?.error ? styles.inputError : ''}`}
+            aria-invalid={!!state?.error}
           />
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
             className={styles.togglePassword}
             aria-label={showPassword ? 'Hide password' : 'Show password'}
+            aria-pressed={showPassword}
           >
             {showPassword ? 'Hide' : 'Show'}
           </button>

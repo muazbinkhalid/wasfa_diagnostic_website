@@ -34,16 +34,16 @@ export async function updateSession(request: NextRequest) {
 
   const pathname = request.nextUrl.pathname
 
-  if (pathname.startsWith('/patient-portal') && !pathname.startsWith('/patient-portal/sign-in')) {
+  if (pathname.startsWith('/patient-portal') && pathname !== '/patient-portal') {
     if (!user) {
       // User is not authenticated, redirect to sign-in page
       const url = request.nextUrl.clone()
-      url.pathname = '/patient-portal/sign-in'
+      url.pathname = '/patient-portal'
       return NextResponse.redirect(url)
     }
   }
 
-  if (pathname === '/patient-portal/sign-in' && user) {
+  if (pathname === '/patient-portal' && user) {
     // User is authenticated, redirect to dashboard
     const url = request.nextUrl.clone()
     url.pathname = '/patient-portal/dashboard'

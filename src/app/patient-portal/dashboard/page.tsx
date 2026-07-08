@@ -12,7 +12,7 @@ export default async function DashboardPage() {
   } = await supabase.auth.getUser()
 
   if (!user) {
-    redirect('/patient-portal/sign-in')
+    redirect('/patient-portal')
   }
 
   // Verify the patient record and their access state
@@ -24,17 +24,17 @@ export default async function DashboardPage() {
 
   if (error || !patient) {
     await supabase.auth.signOut()
-    redirect('/patient-portal/sign-in?error=Patient record not found')
+    redirect('/patient-portal?error=Patient record not found')
   }
 
   if (!patient.portal_enabled) {
     await supabase.auth.signOut()
-    redirect('/patient-portal/sign-in?error=Portal access is disabled for this account')
+    redirect('/patient-portal?error=Portal access is disabled for this account')
   }
 
   if (!patient.is_active) {
     await supabase.auth.signOut()
-    redirect('/patient-portal/sign-in?error=This patient account is inactive')
+    redirect('/patient-portal?error=This patient account is inactive')
   }
 
   return (
@@ -52,7 +52,7 @@ export default async function DashboardPage() {
             'use server'
             const sb = await createClient()
             await sb.auth.signOut()
-            redirect('/patient-portal/sign-in')
+            redirect('/patient-portal')
           }}>
             <button
               type="submit"
