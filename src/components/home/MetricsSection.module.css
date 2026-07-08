@@ -1,0 +1,108 @@
+.metricsSection {
+  width: 100%;
+  background-color: var(--color-surface); /* Distinct, light background */
+  border-top: 1px solid var(--color-rose-gold);
+  border-bottom: 1px solid var(--color-rose-gold);
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 84rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  text-align: center;
+}
+
+.metricItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(3.5rem, 6vw, 5rem) 1.5rem;
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+
+/* Elegant vertical dividers */
+.metricItem:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 20%;
+  height: 60%;
+  width: 1px;
+  background-color: var(--color-rose-gold);
+}
+
+/* Subtle premium interaction */
+.metricItem:hover {
+  background-color: rgba(177, 18, 59, 0.02); 
+}
+
+.metricValue {
+  font-family: var(--font-urdu), serif; 
+  font-size: clamp(3rem, 6vw, 4.5rem);
+  font-weight: 500;
+  color: var(--color-cherry); 
+  line-height: 1;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.metricLabel {
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 700;
+  color: var(--color-ink); 
+}
+
+/* 2x2 Grid for Tablets */
+@media (max-width: 860px) {
+  .container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  /* Reset desktop borders */
+  .metricItem:not(:last-child)::after {
+    display: none;
+  }
+  
+  /* Vertical border for the left items */
+  .metricItem:nth-child(odd)::after {
+    content: "";
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 20%;
+    height: 60%;
+    width: 1px;
+    background-color: var(--color-rose-gold);
+  }
+  
+  /* Horizontal border separating the rows */
+  .metricItem:nth-child(1),
+  .metricItem:nth-child(2) {
+    border-bottom: 1px solid var(--color-rose-gold);
+  }
+}
+
+/* 1-column stack for Mobile */
+@media (max-width: 480px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Remove vertical lines completely */
+  .metricItem:nth-child(odd)::after {
+    display: none; 
+  }
+  
+  /* Add horizontal borders to all except the last item */
+  .metricItem:not(:last-child) {
+    border-bottom: 1px solid var(--color-rose-gold);
+  }
+}
