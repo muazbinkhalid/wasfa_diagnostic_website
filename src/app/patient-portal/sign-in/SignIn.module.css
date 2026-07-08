@@ -1,0 +1,179 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - var(--navbar-height));
+  background-color: var(--color-canvas);
+  padding: 1rem;
+}
+
+.card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-hairline);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(65, 24, 38, 0.05);
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem;
+}
+
+@media (max-width: 380px) {
+  .card {
+    padding: 1.5rem 1rem;
+  }
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.logo {
+  display: block;
+  margin: 0 auto 1.5rem;
+  max-width: 160px;
+  height: auto;
+}
+
+.title {
+  color: var(--color-ink);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: var(--color-ink-muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.formGroup {
+  margin-bottom: 1.25rem;
+  position: relative;
+}
+
+.label {
+  display: block;
+  color: var(--color-ink);
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-hairline);
+  border-radius: 8px;
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--color-cherry);
+  box-shadow: 0 0 0 3px var(--color-blush);
+}
+
+.inputError {
+  border-color: var(--color-cherry);
+}
+
+.passwordWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.passwordInput {
+  padding-right: 3rem;
+}
+
+.togglePassword {
+  position: absolute;
+  right: 0.5rem;
+  background: transparent;
+  border: none;
+  color: var(--color-ink-muted);
+  cursor: pointer;
+  padding: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.togglePassword:hover {
+  color: var(--color-cherry);
+}
+
+.helpText {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--color-ink-muted);
+  line-height: 1.4;
+}
+
+.errorAlert {
+  background-color: var(--color-blush);
+  color: var(--color-cherry-deep);
+  border: 1px solid var(--color-rose-gold);
+  padding: 0.875rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.submitButton {
+  width: 100%;
+  background-color: var(--color-cherry);
+  color: var(--color-surface);
+  border: none;
+  border-radius: 8px;
+  padding: 0.875rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.15s;
+  margin-top: 0.5rem;
+}
+
+.submitButton:hover:not(:disabled) {
+  background-color: var(--color-cherry-deep);
+}
+
+.submitButton:disabled {
+  background-color: var(--color-rose-gold);
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.footer {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.backLink {
+  color: var(--color-ink-muted);
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.backLink:hover {
+  color: var(--color-cherry);
+}
+
+/* Reduced Motion Compatibility */
+@media (prefers-reduced-motion: reduce) {
+  .input, .submitButton, .togglePassword, .backLink {
+    transition: none !important;
+  }
+}
