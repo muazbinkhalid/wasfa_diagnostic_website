@@ -1,51 +1,34 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { GsapProvider } from "@/components/animations/GsapProvider";
-import { siteConfig } from "@/lib/site-config";
+import { Noto_Nastaliq_Urdu, Outfit } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
+const urduFont = Noto_Nastaliq_Urdu({
+  variable: "--font-urdu",
+  subsets: ["arabic"],
+  weight: ["600", "700"],
+  display: "swap",
 });
 
-const playfair = Playfair_Display({
+const sansFont = Outfit({
+  variable: "--font-sans",
   subsets: ["latin"],
-  variable: "--font-display",
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: {
-    default: siteConfig.name,
-    template: `%s | ${siteConfig.shortName}`,
-  },
-  description: siteConfig.description,
-  keywords: [
-    "WASFA Diagnostic",
-    "diagnostic center Jhelum",
-    "lab tests",
-    "ultrasound",
-    "patient portal",
-    "medical reports",
-  ],
+  title: "Wasfa Diagnostic Centre",
+  description: "Clarity in diagnosis. Confidence in care.",
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
-      <body className="min-h-screen">
-        <GsapProvider>
-          <Header />
-          <main>{children}</main>
-          <Footer />
-        </GsapProvider>
-      </body>
+    <html lang="en" className={`${sansFont.variable} ${urduFont.variable}`}>
+      <body className="font-sans">{children}</body>
     </html>
   );
 }

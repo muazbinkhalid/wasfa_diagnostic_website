@@ -1,82 +1,36 @@
-# WASFA Diagnostic Center — Portfolio Website
-
-A modern portfolio website for **WASFA Diagnostic Center** with an integrated patient portal for accessing diagnostic reports. Built as a separate project from the main Diagnostic LMS app.
-
-## Features
-
-- **Modern marketing site** — Home, Services, About, and Contact pages
-- **Light pink theme** — Elegant, warm aesthetic throughout
-- **GSAP animations** — Hero reveals, scroll-triggered animations, magnetic buttons, animated stats
-- **Patient portal** — MRN-based login connected to the same Supabase backend as the patient app
-- **Report downloads** — Secure signed URLs for PDF report access
-
-## Tech Stack
-
-- [Next.js 15](https://nextjs.org/) (App Router)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Tailwind CSS 4](https://tailwindcss.com/)
-- [GSAP](https://gsap.com/) + [@gsap/react](https://gsap.com/docs/v3/Plugins/React/)
-- [Supabase](https://supabase.com/) (Auth, Database, Storage)
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
 
-### 1. Install dependencies
-
-```bash
-npm install
-```
-
-### 2. Configure environment
-
-Copy `.env.local.example` to `.env.local` and add your Supabase credentials:
-
-```bash
-cp .env.local.example .env.local
-```
-
-```env
-NEXT_PUBLIC_SUPABASE_URL=https://pilicztkqptaijhisvwu.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key_here
-```
-
-Use the same Supabase project as the Diagnostic LMS and patient app.
-
-### 3. Run development server
+First, run the development server:
 
 ```bash
 npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Patient Portal
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-Patients sign in with:
-- **Login ID:** MRN (printed on receipt)
-- **Password:** Set by the diagnostic center (default: `wasfa` + last 4 phone digits)
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-The portal uses the same Supabase Auth and RLS policies as `wasfa_patient_app`.
+## Learn More
 
-## Project Structure
+To learn more about Next.js, take a look at the following resources:
 
-```
-wasfa-website/
-├── src/
-│   ├── app/              # Next.js pages
-│   ├── components/       # React components
-│   │   ├── animations/   # GSAP animation wrappers
-│   │   ├── home/         # Homepage sections
-│   │   ├── layout/       # Header, Footer
-│   │   └── portal/       # Login & reports
-│   └── lib/              # Supabase, auth, config
-└── public/               # Static assets (logo)
-```
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-## Related Repositories
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-- **diagnostic_lms** — Staff/admin Flutter app for patient management and report creation
-- **wasfa_patient_app** — Mobile patient portal (Flutter)
+## Deploy on Vercel
 
-## License
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Private — WASFA Diagnostic Center
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

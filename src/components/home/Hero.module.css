@@ -1,0 +1,91 @@
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: max(38rem, 100svh);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 2rem;
+  background: var(--color-canvas);
+}
+
+.backgroundAtmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  background: radial-gradient(
+    circle at 50% 45%,
+    rgba(255, 255, 255, 0.96) 0%,
+    rgba(255, 248, 250, 0.74) 34%,
+    rgba(248, 225, 231, 0.42) 68%,
+    rgba(255, 248, 250, 0.92) 100%
+  );
+  pointer-events: none;
+}
+
+.threadsWrapper {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* 
+  Readability overlay to softly blend the background behind text.
+  Not a hard box, just an atmospheric fade.
+*/
+.readabilityOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    var(--color-surface) 0%,
+    rgba(255, 253, 253, 0.6) 30%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Allow the container to receive pointer events and pass them down if needed, 
+     but prevent it from blocking the Threads pointer interaction */
+  pointer-events: none; 
+}
+
+.content > * {
+  pointer-events: auto; /* Re-enable pointer events for actual text if selectable */
+}
+
+.heading {
+  font-family: var(--font-urdu), serif;
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0;
+  color: var(--color-cherry);
+  margin: 0;
+  padding-block: 1rem; /* Prevent clipping of tall Nastaliq ascenders/descenders */
+}
+
+.tagline {
+  font-family: var(--font-sans), sans-serif;
+  font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  color: var(--color-ink-muted);
+  max-width: 36rem;
+  width: 100%;
+  margin-top: 1.5rem;
+  /* Allow an elegant two-line wrap on narrow devices by restricting width */
+}
