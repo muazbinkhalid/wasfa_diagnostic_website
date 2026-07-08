@@ -9,10 +9,43 @@
   --color-rose-gold: #c88f91;
   --color-blush: #f3dfe5;
   --color-hairline: #ead7dc;
+
+  --navbar-surface: rgba(255, 250, 251, 0.84);
+  --navbar-border: rgba(177, 18, 59, 0.11);
+  --navbar-shadow: rgba(65, 24, 38, 0.06);
+  --navbar-text: #3a2830;
+  --navbar-text-muted: #705c65;
+  --navbar-accent: #b1123b;
+  --navbar-accent-hover: #8f0e31;
+  
+  --navbar-height-desktop: 80px;
+  --navbar-height-tablet: 72px;
+  --navbar-height-mobile: 66px;
+  --navbar-height: var(--navbar-height-desktop);
+}
+
+@media (max-width: 1024px) {
+  :root {
+    --navbar-height: var(--navbar-height-tablet);
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --navbar-height: var(--navbar-height-mobile);
+  }
 }
 
 html {
   height: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--navbar-height);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 html,

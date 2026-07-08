@@ -1,0 +1,220 @@
+.aboutSection {
+  position: relative;
+  background: var(--color-canvas); /* Same base as hero */
+  padding-block: clamp(7rem, 12vw, 12rem);
+  padding-inline: clamp(1rem, 4vw, 3rem);
+  scroll-margin-top: var(--navbar-height);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+/* Match Hero background atmosphere exactly to remove horizontal seam */
+.backgroundAtmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(
+    circle at 50% 45%,
+    rgba(255, 255, 255, 0.96) 0%,
+    rgba(255, 248, 250, 0.74) 34%,
+    rgba(248, 225, 231, 0.42) 68%,
+    rgba(255, 248, 250, 0.92) 100%
+  );
+  pointer-events: none;
+}
+
+.threadsWrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0.4; /* Match Hero opacity */
+  pointer-events: none;
+  /* Fade in at top, fade out at bottom to prevent sharp lines */
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 20%,
+    black 80%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 20%,
+    black 80%,
+    transparent 100%
+  );
+}
+
+.readabilityOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    var(--color-surface) 0%,
+    rgba(255, 253, 253, 0.6) 30%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.container {
+  width: 100%;
+  max-width: 80rem;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: clamp(1.5rem, 3vw, 2rem);
+  position: relative;
+  z-index: 2;
+  align-items: end; /* Unorthodox bottom alignment to let heading breathe vertically */
+}
+
+/* -----------------------------
+   Left Column: Heading 
+------------------------------ */
+.leftColumn {
+  grid-column: 1 / 8; /* Approx 58% width */
+  display: flex;
+  flex-direction: column;
+}
+
+.sectionLabel {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-cherry);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+}
+
+.sectionLabel::before {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--color-cherry);
+}
+
+.heading {
+  font-family: var(--font-sans), sans-serif;
+  font-size: clamp(2.8rem, 6vw, 6rem);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+  color: var(--color-ink);
+  font-weight: 400;
+  /* Prevent awkward orphans */
+  text-wrap: balance;
+  margin: 0;
+}
+
+/* -----------------------------
+   Right Column: Text & Location
+------------------------------ */
+.rightColumn {
+  grid-column: 9 / 13; /* Approx 33% width, leaving an empty column (8) for massive whitespace */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  /* Push text down slightly for editorial offset */
+  padding-bottom: 0.5rem; 
+}
+
+.bodyCopy {
+  font-family: var(--font-sans), sans-serif;
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  line-height: 1.75;
+  color: var(--color-ink-muted);
+  max-width: 32rem;
+  margin-bottom: 3.5rem;
+}
+
+.locationContainer {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.locationLine {
+  width: 1px;
+  height: 20px;
+  background: var(--color-cherry);
+  margin-top: 0.2rem;
+  opacity: 0.6;
+}
+
+.locationText {
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-ink-muted);
+  letter-spacing: 0.02em;
+}
+
+/* -----------------------------
+   Watermark
+------------------------------ */
+.watermark {
+  position: absolute;
+  bottom: -5%;
+  right: -5%;
+  font-family: var(--font-urdu), serif;
+  font-size: 32vw;
+  line-height: 1;
+  color: var(--color-cherry);
+  opacity: 0.02;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+}
+
+/* -----------------------------
+   Responsive Breakpoints
+------------------------------ */
+@media (max-width: 1024px) {
+  .leftColumn {
+    grid-column: 1 / 9;
+  }
+  .rightColumn {
+    grid-column: 9 / 13;
+  }
+  .rightColumn::before {
+    display: none;
+  }
+}
+
+@media (max-width: 820px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: clamp(4rem, 8vw, 6rem);
+  }
+
+  .leftColumn,
+  .rightColumn {
+    width: 100%;
+  }
+
+  .rightColumn {
+    padding-bottom: 0;
+  }
+
+  .watermark {
+    font-size: 60vw;
+    right: -10%;
+    bottom: 5%;
+  }
+}
+
+@media (max-width: 360px) {
+  .heading {
+    /* Ensure no clipping on very tiny screens */
+    word-break: break-word;
+  }
+}

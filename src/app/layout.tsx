@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Noto_Nastaliq_Urdu, Outfit } from "next/font/google";
+import Navbar from "@/components/layout/Navbar";
 import "./globals.css";
 
 const urduFont = Noto_Nastaliq_Urdu({
@@ -28,7 +29,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${sansFont.variable} ${urduFont.variable}`}>
-      <body className="font-sans">{children}</body>
+      <body className="font-sans">
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
 }

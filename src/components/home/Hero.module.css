@@ -7,7 +7,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 4rem 2rem;
+  padding: calc(4rem + var(--navbar-height)) 2rem 4rem;
   background: var(--color-canvas);
 }
 
@@ -31,6 +31,8 @@
   z-index: -2;
   opacity: 0.4;
   pointer-events: none;
+  mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
 }
 
 /* 

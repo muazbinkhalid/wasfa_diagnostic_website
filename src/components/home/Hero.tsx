@@ -1,24 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+// removed unused react imports
 import { motion, useReducedMotion } from "motion/react";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import Threads from "../ui/Threads/Threads";
 import styles from "./Hero.module.css";
 
 export default function Hero() {
   const shouldReduceMotion = useReducedMotion();
-  const [supportsFinePointer, setSupportsFinePointer] = useState(false);
-
-  useEffect(() => {
-    // Detect fine pointer for interaction, falling back to false on touch devices
-    const mediaQuery = window.matchMedia("(pointer: fine)");
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setSupportsFinePointer(mediaQuery.matches);
-
-    const handler = (e: MediaQueryListEvent) => setSupportsFinePointer(e.matches);
-    mediaQuery.addEventListener("change", handler);
-    return () => mediaQuery.removeEventListener("change", handler);
-  }, []);
+  const supportsFinePointer = useMediaQuery("(pointer: fine)");
 
   // Animation variants
   const headingVariants = {
@@ -45,7 +35,7 @@ export default function Hero() {
   };
 
   return (
-    <section className={styles.hero} aria-label="Wasfa Diagnostic Centre Introduction">
+    <section id="home" className={styles.hero} aria-label="Wasfa Diagnostic Centre Introduction">
       {/* CSS Ambient Background */}
       <div className={styles.backgroundAtmosphere} aria-hidden="true" />
       
