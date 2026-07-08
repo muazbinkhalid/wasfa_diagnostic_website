@@ -1,18 +1,36 @@
 .metricsSection {
   width: 100%;
-  background-color: var(--color-surface); /* Distinct, light background */
-  border-top: 1px solid var(--color-rose-gold);
-  border-bottom: 1px solid var(--color-rose-gold);
+  padding: var(--section-padding) 0;
   display: flex;
   justify-content: center;
+  position: relative;
+  background: var(--color-canvas);
+  overflow: hidden;
+}
+
+/* Soft, elegant radial glow instead of harsh borders */
+.metricsSection::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(ellipse at center, rgba(177, 18, 59, 0.03) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .container {
+  position: relative;
+  z-index: 1;
   width: 100%;
   max-width: 84rem;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  text-align: center;
+  gap: clamp(2rem, 4vw, 4rem);
+  padding-inline: clamp(1.5rem, 5vw, 4rem);
 }
 
 .metricItem {
@@ -20,35 +38,21 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: clamp(3.5rem, 6vw, 5rem) 1.5rem;
-  position: relative;
-  transition: background-color 0.3s ease;
-}
-
-/* Elegant vertical dividers */
-.metricItem:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: 20%;
-  height: 60%;
-  width: 1px;
-  background-color: var(--color-rose-gold);
-}
-
-/* Subtle premium interaction */
-.metricItem:hover {
-  background-color: rgba(177, 18, 59, 0.02); 
+  text-align: center;
 }
 
 .metricValue {
-  font-family: var(--font-urdu), serif; 
-  font-size: clamp(3rem, 6vw, 4.5rem);
-  font-weight: 500;
-  color: var(--color-cherry); 
+  font-family: var(--font-sans), sans-serif;
+  font-size: clamp(3.5rem, 6vw, 5.5rem);
+  font-weight: 300;
   line-height: 1;
-  margin-bottom: 1.5rem;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.04em;
+  margin-bottom: 1.25rem;
+  /* Premium gradient text */
+  background: linear-gradient(135deg, var(--color-ink) 0%, var(--color-cherry) 180%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .metricLabel {
@@ -56,53 +60,35 @@
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  font-weight: 700;
-  color: var(--color-ink); 
+  font-weight: 600;
+  color: var(--color-ink-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
 }
 
-/* 2x2 Grid for Tablets */
+/* Subtle cherry accent dot instead of long borders */
+.metricLabel::before {
+  content: "";
+  display: block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: var(--color-cherry);
+  opacity: 0.5;
+}
+
 @media (max-width: 860px) {
   .container {
     grid-template-columns: repeat(2, 1fr);
-  }
-  
-  /* Reset desktop borders */
-  .metricItem:not(:last-child)::after {
-    display: none;
-  }
-  
-  /* Vertical border for the left items */
-  .metricItem:nth-child(odd)::after {
-    content: "";
-    display: block;
-    position: absolute;
-    right: 0;
-    top: 20%;
-    height: 60%;
-    width: 1px;
-    background-color: var(--color-rose-gold);
-  }
-  
-  /* Horizontal border separating the rows */
-  .metricItem:nth-child(1),
-  .metricItem:nth-child(2) {
-    border-bottom: 1px solid var(--color-rose-gold);
+    row-gap: 4.5rem;
   }
 }
 
-/* 1-column stack for Mobile */
 @media (max-width: 480px) {
   .container {
     grid-template-columns: 1fr;
-  }
-  
-  /* Remove vertical lines completely */
-  .metricItem:nth-child(odd)::after {
-    display: none; 
-  }
-  
-  /* Add horizontal borders to all except the last item */
-  .metricItem:not(:last-child) {
-    border-bottom: 1px solid var(--color-rose-gold);
+    row-gap: 4rem;
   }
 }

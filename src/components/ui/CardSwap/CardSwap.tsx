@@ -29,9 +29,26 @@ export default function CardSwap({ cards }: CardSwapProps) {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    const handleVisibilityChange = () => setIsVisible(!document.hidden);
+    const handleVisibilityChange = () => {
+      if (document.hidden) setIsVisible(false);
+    };
     document.addEventListener("visibilitychange", handleVisibilityChange);
-    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        setIsVisible(entries[0].isIntersecting && !document.hidden);
+      },
+      { threshold: 0.1 }
+    );
+    
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+    
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      observer.disconnect();
+    };
   }, []);
 
   useEffect(() => {
@@ -62,10 +79,10 @@ export default function CardSwap({ cards }: CardSwapProps) {
 
     if (frontIndex === 0) {
       gsap.set(card0, { x: -60, y: 0, scale: 1, rotateY: 0, zIndex: 2 });
-      gsap.set(card1, { x: 180, y: 20, scale: 0.92, rotateY: -4, zIndex: 1 });
+      gsap.set(card1, { x: 100, y: 10, scale: 0.95, rotateY: -2, zIndex: 1 });
     } else {
       gsap.set(card1, { x: -60, y: 0, scale: 1, rotateY: 0, zIndex: 2 });
-      gsap.set(card0, { x: 180, y: 20, scale: 0.92, rotateY: -4, zIndex: 1 });
+      gsap.set(card0, { x: 100, y: 10, scale: 0.95, rotateY: -2, zIndex: 1 });
     }
   }, [isMobileOrReducedMotion, frontIndex]);
 
@@ -82,10 +99,10 @@ export default function CardSwap({ cards }: CardSwapProps) {
 
     // 1. Old front card swoops right and back
     timelineRef.current.to(frontCard, {
-      x: 180,
-      y: 20,
-      scale: 0.92,
-      rotateY: -4,
+      x: 100,
+      y: 10,
+      scale: 0.95,
+      rotateY: -2,
       zIndex: 1,
       duration: 0.7,
       ease: "power3.inOut",
@@ -144,7 +161,7 @@ export default function CardSwap({ cards }: CardSwapProps) {
     const backCard = cardsRef.current[frontIndex === 0 ? 1 : 0];
     if (backCard) {
       // Invite interaction by pushing the spread out a bit more
-      gsap.to(backCard, { x: 200, rotateY: -6, duration: 0.4, ease: "power2.out" });
+      gsap.to(backCard, { x: 120, rotateY: -4, duration: 0.4, ease: "power2.out" });
     }
   };
 
@@ -153,7 +170,7 @@ export default function CardSwap({ cards }: CardSwapProps) {
     if (isMobileOrReducedMotion) return;
     const backCard = cardsRef.current[frontIndex === 0 ? 1 : 0];
     if (backCard) {
-      gsap.to(backCard, { x: 180, rotateY: -4, duration: 0.4, ease: "power2.out" });
+      gsap.to(backCard, { x: 100, rotateY: -2, duration: 0.4, ease: "power2.out" });
     }
   };
 
@@ -211,6 +228,14 @@ export default function CardSwap({ cards }: CardSwapProps) {
           );
         })}
       </div>
+      {isMobileOrReducedMotion && (
+        <div className={styles.swipeHint} aria-hidden="true">
+          <span>Swipe to explore</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </div>
+      )}
     </div>
   );
 }

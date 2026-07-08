@@ -170,19 +170,18 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  color: var(--navbar-text);
-  border-radius: 0.4rem;
-  transition: background-color 0.2s ease;
+  color: var(--color-ink);
+  border-radius: 50%;
+  transition: all 0.2s ease;
 }
 
 .menuTrigger:hover,
 .menuTrigger:focus-visible {
-  background: rgba(177, 18, 59, 0.05);
+  background: rgba(177, 18, 59, 0.08);
 }
 
 .menuTrigger:focus-visible {
   outline: 2px solid var(--navbar-accent);
-  outline-offset: -2px;
 }
 
 /* Mobile Panel */
@@ -227,6 +226,16 @@
 }
 
 /* Breakpoints */
+@media (max-width: 819px) {
+  .inner {
+    display: flex;
+    justify-content: space-between;
+  }
+  .headerCta {
+    display: none;
+  }
+}
+
 @media (min-width: 820px) {
   .desktopNav {
     display: block;
@@ -239,23 +248,13 @@
   }
 }
 
-@media (max-width: 360px) {
-  .ctaTextDesktop {
-    display: none;
-  }
-  .ctaTextMobile {
-    display: inline;
-  }
-  .ctaButton {
-    padding-inline: 0.8rem;
-  }
+.mobilePanelFooter {
+  padding: 1rem clamp(1rem, 4vw, 3rem);
+  margin-top: 0.5rem;
+  border-top: 1px solid rgba(177, 18, 59, 0.08);
 }
 
-@media (min-width: 361px) {
-  .ctaTextMobile {
-    display: none;
-  }
-  .ctaTextDesktop {
-    display: inline;
-  }
+.mobilePanelCta {
+  width: 100%;
+  padding-block: 1rem;
 }

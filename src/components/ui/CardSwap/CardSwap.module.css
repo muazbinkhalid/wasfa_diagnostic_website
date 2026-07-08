@@ -165,34 +165,62 @@
     height: auto;
     min-height: auto;
     padding: 0;
+    margin-top: 1rem;
   }
   
   .perspectiveContainer {
-    width: 100%;
-    max-width: 100%;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    padding: 1rem 5vw 3rem 5vw; /* 5vw left padding to anchor start */
+    max-width: none;
     height: auto;
     perspective: none;
     display: flex;
-    flex-direction: column;
-    gap: 2rem;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 4vw;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 5vw; /* Align snap to match padding */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .perspectiveContainer::-webkit-scrollbar {
+    display: none;
   }
   
   .card {
     position: relative;
-    width: 100%;
+    flex: 0 0 82vw; /* Smaller width ensures next card peeks into viewport */
     height: auto;
     transform: none !important;
     opacity: 1 !important;
     filter: none !important;
     z-index: auto !important;
-    padding: 2.5rem 2rem;
-    box-shadow: 0 15px 30px -10px rgba(177, 18, 59, 0.08);
+    padding: 2.5rem 1.75rem; /* Slightly tighter padding for smaller card */
+    box-shadow: 0 20px 40px -10px rgba(177, 18, 59, 0.12), inset 0 1px 2px rgba(255, 255, 255, 0.9);
     cursor: default;
+    scroll-snap-align: start; /* Snap to start rather than center */
+    border-radius: 28px;
+    scroll-snap-stop: always;
   }
   
   .watermark {
     font-size: 10rem;
-    opacity: 0.04;
+    opacity: 0.05;
+    top: auto;
+    left: auto;
+    bottom: -2rem;
+    right: -2rem;
+    transform: rotate(-10deg);
+  }
+  
+  .doctorName {
+    font-size: clamp(2rem, 8vw, 2.8rem);
   }
 }
 
@@ -223,5 +251,36 @@
     filter: none !important;
     z-index: auto !important;
     cursor: default;
+  }
+}
+
+.swipeHint {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .swipeHint {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: -1rem;
+    padding-bottom: 2rem;
+    color: var(--color-ink-muted);
+    font-family: var(--font-sans), sans-serif;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    opacity: 0.8;
+  }
+  .swipeHint svg {
+    width: 16px;
+    height: 16px;
+    animation: swipePulse 2s infinite ease-in-out;
+  }
+  @keyframes swipePulse {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(8px); }
   }
 }

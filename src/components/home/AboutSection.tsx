@@ -8,12 +8,18 @@ import styles from "./AboutSection.module.css";
 export default function AboutSection() {
   const shouldReduceMotion = useReducedMotion();
   const supportsFinePointer = useMediaQuery("(pointer: fine)");
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   const groupVariants = {
-    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 16 },
+    hidden: { 
+      opacity: 0, 
+      y: shouldReduceMotion ? 0 : (isMobile ? 0 : 12),
+      scale: isMobile ? 0.98 : 1
+    },
     visible: {
       opacity: 1,
       y: 0,
+      scale: 1,
       transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as const },
     },
   };
@@ -23,7 +29,7 @@ export default function AboutSection() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.14,
+        staggerChildren: 0.1,
       },
     },
   };
@@ -50,7 +56,7 @@ export default function AboutSection() {
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-10%" }}
+        viewport={{ once: true, margin: "0px 0px -50px 0px" }}
       >
         <motion.div className={styles.introColumn} variants={groupVariants}>
           <p className={styles.sectionLabel}>About Wasfa</p>

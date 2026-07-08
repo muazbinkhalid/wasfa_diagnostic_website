@@ -2,7 +2,7 @@
   position: relative;
   background-color: #2a111a;
   color: #fff8fa;
-  padding: clamp(4rem, 6vw, 6rem) 0 2rem;
+  padding: var(--section-padding) 0 2rem;
   overflow: hidden;
   --footer-muted: rgba(255, 248, 250, 0.66);
   --footer-line: rgba(255, 248, 250, 0.12);
@@ -15,7 +15,7 @@
   left: 50%;
   transform: translate(-50%, -50%) rotate(-15deg);
   font-family: var(--font-urdu), serif;
-  font-size: clamp(10rem, 30vw, 32rem);
+  font-size: clamp(6rem, 20vw, 32rem);
   line-height: 0.75;
   color: #fff8fa;
   opacity: 0.025; /* Slightly softer opacity since it's under more text */
@@ -160,7 +160,7 @@
 @media (max-width: 768px) {
   .grid {
     grid-template-columns: 1fr;
-    gap: 4rem;
+    gap: 2.5rem;
   }
   
   .legalRow {

@@ -4,6 +4,8 @@ import { motion, useReducedMotion } from "motion/react";
 import FlowingMenu from "../ui/FlowingMenu/FlowingMenu";
 import styles from "./ServicesSection.module.css";
 
+import { useMediaQuery } from "@/hooks/useMediaQuery";
+
 const services = [
   {
     index: "01",
@@ -39,20 +41,26 @@ const services = [
 
 export default function ServicesSection() {
   const shouldReduceMotion = useReducedMotion();
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   const sectionVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.15 },
+      transition: { staggerChildren: 0.1 },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
+    hidden: { 
+      opacity: 0, 
+      y: shouldReduceMotion ? 0 : (isMobile ? 0 : 12),
+      scale: isMobile ? 0.98 : 1
+    },
     visible: {
       opacity: 1,
       y: 0,
+      scale: 1,
       transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const },
     },
   };
@@ -65,7 +73,7 @@ export default function ServicesSection() {
         variants={sectionVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-10%" }}
+        viewport={{ once: true, margin: "0px 0px -50px 0px" }}
         style={{ width: '100%' }}
       >
         <div className={styles.introContainer}>
@@ -82,7 +90,7 @@ export default function ServicesSection() {
         </div>
 
         <motion.div className={styles.menuContainer} variants={itemVariants}>
-          <FlowingMenu items={services} speed={50} />
+          <FlowingMenu items={services} speed={120} />
         </motion.div>
       </motion.div>
     </section>

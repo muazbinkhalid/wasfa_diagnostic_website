@@ -3,16 +3,18 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import styles from "./PatientPortalCTA.module.css";
 
 export default function PatientPortalCTA() {
+  const isMobile = useMediaQuery("(max-width: 768px)");
   return (
     <motion.section 
       id="patient-portal" 
       className={styles.section}
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-10%" }}
+      initial={{ opacity: 0, y: isMobile ? 0 : 12, scale: isMobile ? 0.98 : 1 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, margin: "0px 0px -50px 0px" }}
       transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
     >
       <div className={styles.content}>

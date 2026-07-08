@@ -31,6 +31,7 @@ function FlowingMenuItem({ item, speed }: { item: ServiceItem; speed: number }) 
   const marqueeWrapRef = useRef<HTMLDivElement>(null);
   const marqueeInnerRef = useRef<HTMLDivElement>(null);
   const marqueePartRef = useRef<HTMLDivElement>(null);
+  const tweenRef = useRef<gsap.core.Tween | null>(null);
 
   const [repetitions, setRepetitions] = useState(4);
 
@@ -73,21 +74,27 @@ function FlowingMenuItem({ item, speed }: { item: ServiceItem; speed: number }) 
       const partWidth = (parts[0] as HTMLElement).offsetWidth;
       if (!partWidth) return;
 
+      if (tweenRef.current) tweenRef.current.kill();
+      
       // Animate from 0 to -partWidth, since all parts are identical, then wrap.
       // Use partWidth / 50 to maintain a constant physical speed of 50px per second.
-      gsap.fromTo(
+      tweenRef.current = gsap.fromTo(
         inner,
         { x: 0 },
         {
           x: -partWidth,
-          duration: partWidth / 50, 
+          duration: partWidth / speed, 
           ease: "none",
           repeat: -1,
+          paused: true,
         }
       );
     }, inner);
 
-    return () => ctx.revert();
+    return () => {
+      if (tweenRef.current) tweenRef.current.kill();
+      ctx.revert();
+    };
   }, [repetitions, speed]);
 
   useEffect(() => {
@@ -106,7 +113,22 @@ function FlowingMenuItem({ item, speed }: { item: ServiceItem; speed: number }) 
         return e.clientY < rect.top + rect.height / 2;
       };
 
+      let isHovered = false;
+      let isVisible = true;
+
+      const observer = new IntersectionObserver((entries) => {
+        isVisible = entries[0].isIntersecting;
+        if (!isVisible && tweenRef.current) {
+          tweenRef.current.pause();
+        } else if (isVisible && isHovered && tweenRef.current) {
+          tweenRef.current.play();
+        }
+      });
+      observer.observe(el);
+
       const handleMouseEnter = (e: MouseEvent) => {
+        isHovered = true;
+        if (isVisible && tweenRef.current) tweenRef.current.play();
         const enterFromTop = getEnterFromTop(e);
         gsap.fromTo(
           wrap,
@@ -116,6 +138,8 @@ function FlowingMenuItem({ item, speed }: { item: ServiceItem; speed: number }) 
       };
 
       const handleMouseLeave = (e: MouseEvent) => {
+        isHovered = false;
+        if (tweenRef.current) tweenRef.current.pause();
         const leaveFromTop = getEnterFromTop(e);
         gsap.to(wrap, {
           clipPath: leaveFromTop ? clipTop : clipBottom,
@@ -126,10 +150,14 @@ function FlowingMenuItem({ item, speed }: { item: ServiceItem; speed: number }) 
       };
 
       const handleFocus = () => {
+        isHovered = true;
+        if (isVisible && tweenRef.current) tweenRef.current.play();
         gsap.to(wrap, { clipPath: clipFull, duration: 0.5, ease: "power3.out", overwrite: true });
       };
 
       const handleBlur = () => {
+        isHovered = false;
+        if (tweenRef.current) tweenRef.current.pause();
         gsap.to(wrap, { clipPath: clipTop, duration: 0.5, ease: "power3.out", overwrite: true });
       };
 
@@ -139,6 +167,7 @@ function FlowingMenuItem({ item, speed }: { item: ServiceItem; speed: number }) 
       el.addEventListener("blur", handleBlur);
 
       return () => {
+        observer.disconnect();
         el.removeEventListener("mouseenter", handleMouseEnter);
         el.removeEventListener("mouseleave", handleMouseLeave);
         el.removeEventListener("focus", handleFocus);

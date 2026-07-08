@@ -9,28 +9,29 @@ import styles from "./Hero.module.css";
 export default function Hero() {
   const shouldReduceMotion = useReducedMotion();
   const supportsFinePointer = useMediaQuery("(pointer: fine)");
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   // Animation variants
   const headingVariants = {
     hidden: { 
       opacity: 0, 
-      y: shouldReduceMotion ? 0 : 20,
-      filter: shouldReduceMotion ? "blur(0px)" : "blur(8px)" 
+      y: shouldReduceMotion ? 0 : (isMobile ? 0 : 12),
+      scale: isMobile ? 0.98 : 1
     },
     visible: { 
       opacity: 1, 
       y: 0,
-      filter: "blur(0px)",
+      scale: 1,
       transition: { duration: 0.85, ease: [0.16, 1, 0.3, 1] as const }
     }
   };
 
   const taglineVariants = {
-    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 12 },
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : (isMobile ? 0 : 12) },
     visible: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const, delay: 0.15 }
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const, delay: 0.1 }
     }
   };
 

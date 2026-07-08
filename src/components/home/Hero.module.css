@@ -7,7 +7,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: calc(4rem + var(--navbar-height)) 2rem 4rem;
+  padding: calc(4rem + var(--navbar-height)) clamp(1rem, 4vw, 2rem) 4rem;
   background: var(--color-canvas);
 }
 
@@ -24,6 +24,8 @@
   );
   pointer-events: none;
 }
+
+
 
 .threadsWrapper {
   position: absolute;

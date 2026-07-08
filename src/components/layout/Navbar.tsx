@@ -117,9 +117,8 @@ export default function Navbar() {
             </svg>
           </button>
 
-          <Link href="/patient-portal" className={styles.ctaButton} aria-label="Patient Portal">
-            <span className={styles.ctaTextDesktop}>Patient Portal</span>
-            <span className={styles.ctaTextMobile}>Portal</span>
+          <Link href="/patient-portal" className={`${styles.ctaButton} ${styles.headerCta}`} aria-label="Patient Portal">
+            <span>Patient Portal</span>
             <svg className={styles.ctaArrow} width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
@@ -152,6 +151,14 @@ export default function Navbar() {
                 </li>
               ))}
             </ul>
+            <div className={styles.mobilePanelFooter}>
+              <Link href="/patient-portal" className={`${styles.ctaButton} ${styles.mobilePanelCta}`} aria-label="Patient Portal" onClick={() => setIsMenuOpen(false)}>
+                Patient Portal
+                <svg className={styles.ctaArrow} width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </Link>
+            </div>
           </motion.nav>
         )}
       </AnimatePresence>
