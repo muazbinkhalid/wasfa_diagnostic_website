@@ -15,13 +15,11 @@
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: radial-gradient(
-    circle at 50% 45%,
-    rgba(255, 255, 255, 0.96) 0%,
-    rgba(255, 248, 250, 0.74) 34%,
-    rgba(248, 225, 231, 0.42) 68%,
-    rgba(255, 248, 250, 0.92) 100%
-  );
+  background: radial-gradient(circle at 50% 45%,
+      rgba(255, 255, 255, 0.96) 0%,
+      rgba(255, 248, 250, 0.74) 34%,
+      rgba(248, 225, 231, 0.42) 68%,
+      rgba(255, 248, 250, 0.92) 100%);
 }
 
 .threadsWrapper {
@@ -42,12 +40,10 @@
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: radial-gradient(
-    ellipse at 50% 50%,
-    var(--color-surface) 0%,
-    rgba(255, 253, 253, 0.6) 30%,
-    transparent 70%
-  );
+  background: radial-gradient(ellipse at 50% 50%,
+      var(--color-surface) 0%,
+      rgba(255, 253, 253, 0.6) 30%,
+      transparent 70%);
 }
 
 .container {
@@ -72,12 +68,10 @@
   width: min(100%, 24rem);
   height: 1px;
   margin-top: clamp(2rem, 4vw, 3.5rem);
-  background: linear-gradient(
-    to right,
-    rgba(177, 18, 59, 0.46),
-    rgba(177, 18, 59, 0.08),
-    transparent
-  );
+  background: linear-gradient(to right,
+      rgba(177, 18, 59, 0.46),
+      rgba(177, 18, 59, 0.08),
+      transparent);
 }
 
 .sectionLabel {
@@ -127,12 +121,10 @@
   bottom: 0.1rem;
   left: 0;
   width: 1px;
-  background: linear-gradient(
-    to bottom,
-    rgba(177, 18, 59, 0.24),
-    rgba(177, 18, 59, 0.08),
-    transparent
-  );
+  background: linear-gradient(to bottom,
+      rgba(177, 18, 59, 0.24),
+      rgba(177, 18, 59, 0.08),
+      transparent);
 }
 
 .bodyCopy {
@@ -173,13 +165,11 @@
   }
 
   .backgroundAtmosphere {
-    background: radial-gradient(
-      circle at 50% 45%,
-      rgba(255, 255, 255, 0.96) 0%,
-      rgba(255, 248, 250, 0.74) 34%,
-      rgba(248, 225, 231, 0.42) 68%,
-      rgba(255, 248, 250, 0.92) 100%
-    );
+    background: radial-gradient(circle at 50% 45%,
+        rgba(255, 255, 255, 0.96) 0%,
+        rgba(255, 248, 250, 0.74) 34%,
+        rgba(248, 225, 231, 0.42) 68%,
+        rgba(255, 248, 250, 0.92) 100%);
   }
 
   .introColumn::after {
