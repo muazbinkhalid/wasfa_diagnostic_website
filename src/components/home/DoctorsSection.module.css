@@ -1,0 +1,143 @@
+.doctorsSection {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  min-height: max(40rem, 80svh);
+  padding: clamp(4.75rem, 8vw, 6rem) clamp(1rem, 4vw, 3rem);
+  background: var(--color-canvas);
+}
+
+.backgroundAtmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 10% 80%,
+      rgba(255, 255, 255, 0.96) 0%,
+      rgba(255, 248, 250, 0.74) 34%,
+      rgba(248, 225, 231, 0.42) 68%,
+      rgba(255, 248, 250, 0.92) 100%);
+}
+
+.readabilityOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 50%,
+      var(--color-surface) 0%,
+      rgba(255, 253, 253, 0.4) 40%,
+      transparent 80%);
+}
+
+.container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 84rem;
+  display: grid;
+  grid-template-columns: minmax(28rem, 1.2fr) minmax(0, 0.9fr);
+  align-items: center;
+  gap: clamp(2.5rem, 6vw, 6rem);
+}
+
+.introColumn {
+  position: relative;
+  min-width: 0;
+}
+
+.introColumn::after {
+  content: "";
+  display: block;
+  width: min(100%, 20rem);
+  height: 1px;
+  margin-top: clamp(2rem, 4vw, 3.5rem);
+  background: linear-gradient(to right,
+      rgba(177, 18, 59, 0.46),
+      rgba(177, 18, 59, 0.08),
+      transparent);
+}
+
+.sectionLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0 0 clamp(1rem, 2vw, 1.5rem);
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-cherry);
+}
+
+.sectionLabel::before {
+  content: "";
+  width: 2.5rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.58;
+}
+
+.heading {
+  max-width: 12ch;
+  margin: 0 0 1.5rem 0;
+  font-family: var(--font-sans), sans-serif;
+  font-size: clamp(3.5rem, 6vw, 5.5rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+  text-wrap: balance;
+}
+
+.bodyCopy {
+  max-width: 32rem;
+  margin: 0;
+  font-family: var(--font-sans), sans-serif;
+  font-size: clamp(1.08rem, 1.4vw, 1.2rem);
+  font-weight: 400;
+  line-height: 1.84;
+  color: var(--color-ink-muted);
+}
+
+.rightColumn {
+  position: relative;
+  min-width: 0;
+  display: flex;
+  justify-content: flex-start;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 6vw, 3.5rem);
+  }
+
+  .heading {
+    max-width: 14ch;
+  }
+
+  .rightColumn {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .doctorsSection {
+    min-height: auto;
+    padding-block: clamp(4.5rem, 16vw, 6rem);
+  }
+
+  .introColumn::after {
+    width: 12rem;
+    margin-top: 2rem;
+  }
+
+  .bodyCopy {
+    line-height: 1.72;
+  }
+}
