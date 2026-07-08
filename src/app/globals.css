@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+@theme {
+  --color-pink-50: #fff5f8;
+  --color-pink-100: #ffe4ec;
+  --color-pink-200: #ffc9db;
+  --color-pink-300: #ffa3c2;
+  --color-pink-400: #ff7aab;
+  --color-pink-500: #f24d8f;
+  --color-pink-600: #e02d73;
+  --color-pink-700: #bc1d5c;
+  --color-pink-800: #9b1a4d;
+  --color-pink-900: #831a45;
+  --color-rose-glow: #ffd6e8;
+  --color-blush: #fff0f5;
+  --color-warm-white: #fffbfc;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-family-display: var(--font-display);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-warm-white text-pink-900 antialiased;
+    font-family: var(--font-sans);
+  }
+
+  ::selection {
+    @apply bg-pink-300 text-pink-900;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-pink-600 via-pink-500 to-pink-400 bg-clip-text text-transparent;
+  }
+
+  .glass {
+    @apply border border-pink-200/60 bg-white/70 backdrop-blur-xl;
+  }
+
+  .section-padding {
+    @apply px-5 py-20 md:px-8 md:py-28 lg:px-12;
+  }
+
+  .blob {
+  filter: blur(80px);
+  }
+}
