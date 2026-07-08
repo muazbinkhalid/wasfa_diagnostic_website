@@ -1,0 +1,244 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans), sans-serif;
+  position: relative;
+}
+
+/* =========================================
+   DESKTOP SIDEBAR RAIL
+   ========================================= */
+.desktopSidebar {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  bottom: 1rem;
+  width: 220px;
+  background-color: var(--color-surface);
+  border-radius: 16px;
+  border: 1px solid var(--color-hairline);
+  box-shadow: 0 4px 16px rgba(36, 23, 28, 0.03);
+  display: flex;
+  flex-direction: column;
+  z-index: 50;
+  overflow-y: auto;
+}
+
+.brandHeader {
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.brandText {
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-cherry);
+}
+
+.navRail {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0 1rem;
+  flex-grow: 1;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  color: var(--color-ink-muted);
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.navItem:hover {
+  background-color: var(--color-blush);
+  color: var(--color-cherry-deep);
+}
+
+.navItemActive {
+  background-color: var(--color-blush);
+  color: var(--color-cherry);
+  font-weight: 600;
+}
+
+.icon {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+/* =========================================
+   MAIN CONTENT AREA
+   ========================================= */
+.mainWrapper {
+  flex: 1;
+  margin-left: calc(220px + 2rem);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* =========================================
+   TOP UTILITY BAR
+   ========================================= */
+.topUtilityBar {
+  position: sticky;
+  top: 1rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  background-color: var(--color-surface);
+  border-radius: 12px;
+  border: 1px solid var(--color-hairline);
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 40;
+  box-shadow: 0 2px 12px rgba(36, 23, 28, 0.03);
+}
+
+.pageTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-ink);
+  letter-spacing: -0.01em;
+}
+
+.utilityActions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Profile Switcher Select */
+.profileSelect {
+  appearance: none;
+  background-color: var(--color-canvas);
+  border: 1px solid var(--color-hairline);
+  border-radius: 8px;
+  padding: 0.5rem 2rem 0.5rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-ink);
+  cursor: pointer;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="none" stroke="%2378636c" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>');
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.profileSelect:hover, .profileSelect:focus {
+  border-color: var(--color-cherry);
+  outline: none;
+}
+
+.logoutButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  border: none;
+  color: var(--color-ink-muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.logoutButton:hover {
+  background-color: var(--color-blush);
+  color: var(--color-cherry);
+}
+
+/* =========================================
+   MOBILE TAB BAR
+   ========================================= */
+.mobileTabBar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--color-hairline);
+  padding: 0.5rem 1rem;
+  padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+  z-index: 50;
+  box-shadow: 0 -4px 16px rgba(36, 23, 28, 0.04);
+}
+
+.mobileNavGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.mobileNavItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  color: var(--color-ink-muted);
+  text-decoration: none;
+  font-size: 0.65rem;
+  font-weight: 500;
+  padding: 0.5rem 0;
+  border-radius: 8px;
+  transition: color 0.2s;
+}
+
+.mobileNavItemActive {
+  color: var(--color-cherry);
+  font-weight: 600;
+}
+
+/* =========================================
+   RESPONSIVE LOGIC
+   ========================================= */
+@media (max-width: 768px) {
+  .desktopSidebar {
+    display: none;
+  }
+  
+  .mobileTabBar {
+    display: block;
+  }
+  
+  .mainWrapper {
+    margin-left: 0;
+    padding-bottom: calc(4rem + env(safe-area-inset-bottom));
+  }
+  
+  .topUtilityBar {
+    top: 0.5rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    padding: 0.5rem 1rem;
+  }
+  
+  .pageTitle {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .profileSelect {
+    max-width: 120px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
