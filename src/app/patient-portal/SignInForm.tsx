@@ -24,6 +24,14 @@ export default function SignInForm() {
   const initialState: SignInState = { error: undefined, mrn: '' }
   const [state, formAction] = useActionState(signInPatient, initialState)
 
+  const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+    const target = event.target
+    // Delay scroll to allow mobile virtual keyboard animation to finish
+    setTimeout(() => {
+      target.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }, 300)
+  }
+
   return (
     <form action={formAction} noValidate>
       {state?.error && (
@@ -44,6 +52,7 @@ export default function SignInForm() {
           maxLength={50}
           autoComplete="username"
           defaultValue={state?.mrn || ''}
+          onFocus={handleFocus}
           className={`${styles.input} ${state?.error ? styles.inputError : ''}`}
           placeholder="e.g. AA-XXXXXX"
           aria-invalid={!!state?.error}
@@ -62,6 +71,7 @@ export default function SignInForm() {
             required
             maxLength={128}
             autoComplete="current-password"
+            onFocus={handleFocus}
             className={`${styles.input} ${styles.passwordInput} ${state?.error ? styles.inputError : ''}`}
             aria-invalid={!!state?.error}
           />

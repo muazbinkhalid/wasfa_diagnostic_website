@@ -624,7 +624,7 @@
 
 @media (max-width: 430px) {
   .layout {
-    padding: 0;
+    padding: 0 0 45vh 0;
     align-items: stretch;
   }
 
