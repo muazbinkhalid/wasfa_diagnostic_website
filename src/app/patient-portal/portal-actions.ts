@@ -33,6 +33,7 @@ export async function switchActiveProfile(profileId: string) {
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
     path: '/',
+    // No maxAge or expires set, ensuring this acts as a strict session cookie
   })
 }
 

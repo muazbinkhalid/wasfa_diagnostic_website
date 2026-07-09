@@ -69,6 +69,18 @@ export default function Navbar() {
       initial="hidden"
       animate="visible"
     >
+      <div className={`${styles.topBar} ${isScrolled ? styles.topBarHidden : ""}`}>
+        <div className={styles.topBarInner}>
+          <div className={styles.topBarGroup}>
+            <span className={styles.topBarItem}>Major Akram Shaheed Road, Azizabad, Jhelum</span>
+          </div>
+          <div className={styles.topBarGroup}>
+            <span className={styles.topBarItem}>Mon-Sat: 8:00 AM - 8:00 PM (Sun Off)</span>
+            <span className={styles.topBarDivider}>|</span>
+            <span className={styles.topBarItem}>+92 346-7122225 / 0544-234111</span>
+          </div>
+        </div>
+      </div>
       <div className={styles.inner}>
         
         {/* Left: Logo */}

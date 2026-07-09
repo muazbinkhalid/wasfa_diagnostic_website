@@ -99,7 +99,6 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin-top: 1.25rem;
   padding: 1rem 1.1rem;
   border: 1px solid rgba(234, 215, 220, 0.84);
   border-radius: 16px;
@@ -109,6 +108,25 @@
 
 .supportCopy {
   min-width: 0;
+}
+
+.desktopHelpOnly {
+  display: block;
+  margin-top: 0;
+}
+
+.mobileHelpOnly {
+  display: none;
+  margin-top: 1.25rem;
+}
+
+@media (max-width: 850px) {
+  .desktopHelpOnly {
+    display: none;
+  }
+  .mobileHelpOnly {
+    display: block;
+  }
 }
 
 .supportEyebrow {

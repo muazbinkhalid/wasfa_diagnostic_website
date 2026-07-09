@@ -1,8 +1,17 @@
+import { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import PortalSupportHelp from './PortalSupportHelp'
 import SignInForm from './SignInForm'
 import styles from './SignIn.module.css'
+
+export const metadata: Metadata = {
+  title: "Patient Portal",
+  description: "Sign in to the Wasfa Diagnostic Centre secure patient portal to access your diagnostic reports and visit history.",
+  alternates: {
+    canonical: "/patient-portal",
+  },
+};
 
 export default function SignInPage() {
   return (
@@ -25,7 +34,9 @@ export default function SignInPage() {
           </header>
 
           <SignInForm />
-          <PortalSupportHelp />
+          <div className={styles.mobileHelpOnly}>
+            <PortalSupportHelp />
+          </div>
 
           <p className={styles.returnHint}>
             Not trying to sign in? <Link href="/">Return to Wasfa Diagnostic Centre.</Link>
@@ -42,8 +53,12 @@ export default function SignInPage() {
             <div className={styles.infoBlock}>
               <h3 className={styles.infoTitle}>First time signing in?</h3>
               <p className={styles.infoText}>
-                Use the temporary password provided by Wasfa Diagnostic Centre.
+                Use <strong>wasfa</strong> + the last 4 digits of your registered phone number as your temporary password (e.g., <strong>wasfa1234</strong>).
               </p>
+            </div>
+            
+            <div className={styles.desktopHelpOnly}>
+              <PortalSupportHelp />
             </div>
           </div>
         </aside>
