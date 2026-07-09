@@ -1,4 +1,3 @@
-import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'
 import DesktopSidebar from '@/components/portal/DesktopSidebar'
@@ -59,7 +58,7 @@ export default async function DashboardLayout({
           activeProfileId={safeProfileId} 
           profiles={validProfiles} 
         />
-        <main className="flex-1 p-4 sm:p-6 lg:p-8">
+        <main className={styles.mainContent}>
           {children}
         </main>
       </div>

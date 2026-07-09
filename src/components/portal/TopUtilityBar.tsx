@@ -1,6 +1,7 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { LogOut } from 'lucide-react'
 import { switchActiveProfile, signOut } from '@/app/patient-portal/portal-actions'
 import styles from './PortalShell.module.css'
@@ -19,6 +20,7 @@ export default function TopUtilityBar({
   profiles: Profile[] 
 }) {
   const pathname = usePathname()
+  const router = useRouter()
 
   // Map route to human-readable title
   const getPageTitle = () => {
@@ -32,6 +34,7 @@ export default function TopUtilityBar({
   const handleProfileChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newId = e.target.value
     await switchActiveProfile(newId)
+    router.refresh()
   }
 
   return (
@@ -55,7 +58,7 @@ export default function TopUtilityBar({
         )}
 
         {profiles.length === 1 && (
-          <span className="hidden sm:inline-block text-sm font-medium text-gray-500">
+          <span className={styles.activeProfileName}>
             {profiles[0].full_name}
           </span>
         )}
@@ -63,7 +66,7 @@ export default function TopUtilityBar({
         <form action={signOut}>
           <button type="submit" className={styles.logoutButton} aria-label="Sign out">
             <LogOut className={styles.icon} />
-            <span className="hidden sm:inline">Sign Out</span>
+            <span className={styles.logoutText}>Sign Out</span>
           </button>
         </form>
       </div>

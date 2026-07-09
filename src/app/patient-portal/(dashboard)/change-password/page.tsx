@@ -1,23 +1,32 @@
-import ChangePasswordForm from './ChangePasswordForm'
 import Link from 'next/link'
+import { ArrowLeft, ShieldCheck } from 'lucide-react'
+import ChangePasswordForm from './ChangePasswordForm'
+import styles from '@/components/portal/PortalDashboard.module.css'
 
 export const dynamic = 'force-dynamic'
 
 export default function ChangePasswordPage() {
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full mx-auto bg-white rounded-xl shadow-lg border p-8">
-        <div className="mb-6 flex items-center justify-between border-b pb-4">
-          <h1 className="text-2xl font-bold text-gray-900">Change Password</h1>
-          <Link
-            href="/patient-portal/dashboard"
-            className="text-sm font-medium text-blue-600 hover:text-blue-500"
-          >
-            Back to Dashboard
+    <div className={`${styles.narrowPage} ${styles.stack}`}>
+      <section className={styles.panel}>
+        <div className={styles.sectionHeader}>
+          <div className={styles.sectionTitleWrap}>
+            <span className={styles.sectionIcon}>
+              <ShieldCheck size={18} />
+            </span>
+            <div>
+              <h1 className={styles.sectionTitle}>Change password</h1>
+              <p className={styles.sectionSubtitle}>Set a secure password for your patient portal account</p>
+            </div>
+          </div>
+          <Link href="/patient-portal/dashboard" className={styles.button}>
+            <ArrowLeft size={16} />
+            Dashboard
           </Link>
         </div>
+
         <ChangePasswordForm />
-      </div>
+      </section>
     </div>
   )
 }

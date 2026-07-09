@@ -19,6 +19,7 @@ export default function DesktopSidebar() {
     <aside className={styles.desktopSidebar}>
       <div className={styles.brandHeader}>
         <div className={styles.brandText}>Wasfa Portal</div>
+        <span className={styles.brandSubtext}>Patient diagnostics</span>
       </div>
       
       <nav className={styles.navRail}>

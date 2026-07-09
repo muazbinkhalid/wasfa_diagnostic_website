@@ -2,18 +2,19 @@
 
 import { useState } from 'react'
 import { createClient } from '@/utils/supabase/client'
+import styles from '@/components/portal/PortalDashboard.module.css'
 
 export default function ChangePasswordForm() {
   const supabase = createClient()
-  
+
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault()
     setError(null)
     setSuccess(false)
     setLoading(true)
@@ -41,26 +42,26 @@ export default function ChangePasswordForm() {
       setNewPassword('')
       setConfirmPassword('')
     }
-    
+
     setLoading(false)
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className={styles.form} noValidate>
       {error && (
-        <div className="bg-red-50 text-red-600 p-3 rounded-md text-sm border border-red-200">
+        <div className={styles.alertError} role="alert" aria-live="assertive">
           {error}
         </div>
       )}
       {success && (
-        <div className="bg-green-50 text-green-600 p-3 rounded-md text-sm border border-green-200">
+        <div className={styles.alertSuccess} role="status" aria-live="polite">
           Password successfully updated.
         </div>
       )}
-      
-      <div>
-        <label htmlFor="new-password" className="block text-sm font-medium text-gray-700">
-          New Password
+
+      <div className={styles.fieldGroup}>
+        <label htmlFor="new-password" className={styles.label}>
+          New password
         </label>
         <input
           id="new-password"
@@ -68,15 +69,16 @@ export default function ChangePasswordForm() {
           type="password"
           required
           minLength={6}
+          autoComplete="new-password"
           value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm px-3 py-2 border focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-900"
+          onChange={(event) => setNewPassword(event.target.value)}
+          className={styles.input}
         />
       </div>
 
-      <div>
-        <label htmlFor="confirm-password" className="block text-sm font-medium text-gray-700">
-          Confirm New Password
+      <div className={styles.fieldGroup}>
+        <label htmlFor="confirm-password" className={styles.label}>
+          Confirm new password
         </label>
         <input
           id="confirm-password"
@@ -84,18 +86,15 @@ export default function ChangePasswordForm() {
           type="password"
           required
           minLength={6}
+          autoComplete="new-password"
           value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm px-3 py-2 border focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-900"
+          onChange={(event) => setConfirmPassword(event.target.value)}
+          className={styles.input}
         />
       </div>
 
-      <button
-        type="submit"
-        disabled={loading}
-        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
-      >
-        {loading ? 'Updating...' : 'Update Password'}
+      <button type="submit" disabled={loading} className={styles.primaryButton}>
+        {loading ? 'Updating...' : 'Update password'}
       </button>
     </form>
   )
