@@ -15,7 +15,7 @@
   left: 50%;
   transform: translate(-50%, -50%) rotate(-15deg);
   font-family: var(--font-urdu), serif;
-  font-size: clamp(6rem, 20vw, 32rem);
+  font-size: clamp(4rem, 10vw, 16rem);
   line-height: 0.75;
   color: #fff8fa;
   opacity: 0.025; /* Slightly softer opacity since it's under more text */

@@ -13,7 +13,7 @@ export default function Footer() {
   return (
     <footer id="contact" className={styles.footer}>
       {/* Decorative Urdu Watermark */}
-      <div className={styles.watermark} aria-hidden="true">وصفہ</div>
+      <div className={styles.watermark} aria-hidden="true">واصفہ ڈائیگناسٹکس</div>
 
       <motion.div 
         className={styles.container}

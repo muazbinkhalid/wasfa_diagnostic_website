@@ -215,7 +215,7 @@ export default function CardSwap({ cards }: CardSwapProps) {
               aria-hidden="false"
             >
               {/* Urdu Watermark */}
-              <div className={styles.watermark} aria-hidden="true">وصفہ</div>
+              <div className={styles.watermark} aria-hidden="true">واصفہ</div>
 
               <div className={styles.cardHeader}>
                 <span className={styles.cardIndex}>{card.index}</span>

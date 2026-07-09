@@ -11,8 +11,8 @@ export default function AboutSection() {
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   const groupVariants = {
-    hidden: { 
-      opacity: 0, 
+    hidden: {
+      opacity: 0,
       y: shouldReduceMotion ? 0 : (isMobile ? 0 : 12),
       scale: isMobile ? 0.98 : 1
     },

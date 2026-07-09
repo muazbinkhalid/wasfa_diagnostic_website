@@ -65,7 +65,7 @@ export default function Hero() {
           initial="hidden"
           animate="visible"
         >
-          وصفہ ڈائیگناسٹکس
+          واصفہ ڈائیگناسٹکس
         </motion.h1>
         
         <motion.p

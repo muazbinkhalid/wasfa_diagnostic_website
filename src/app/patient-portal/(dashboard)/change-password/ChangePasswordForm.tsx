@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useState } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import styles from '@/components/portal/PortalDashboard.module.css'
@@ -165,9 +166,15 @@ export default function ChangePasswordForm() {
         ))}
       </ul>
 
-      <button type="submit" disabled={loading} className={styles.primaryButton}>
-        {loading ? 'Updating...' : 'Update password'}
-      </button>
+      <div className={styles.formActions}>
+        <button type="submit" disabled={loading} className={styles.primaryButton}>
+          {loading ? 'Updating...' : 'Update password'}
+        </button>
+        <Link href="/patient-portal/dashboard" className={styles.button}>
+          Do later
+        </Link>
+      </div>
     </form>
   )
 }
+

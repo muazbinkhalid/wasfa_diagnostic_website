@@ -41,7 +41,7 @@ export default function DesktopSidebar() {
             />
           </span>
           <div className={styles.brandCopy}>
-            <div className={styles.brandText} lang="ur" dir="rtl" style={{ fontFamily: 'var(--font-urdu), serif', fontSize: '1.35rem', fontWeight: 600, letterSpacing: 0, lineHeight: 1.25, textTransform: 'none' }}>وصفہ ڈائیگناسٹکس</div>
+            <div className={styles.brandText} lang="ur" dir="rtl" style={{ fontFamily: 'var(--font-urdu), serif', fontSize: '1.35rem', fontWeight: 600, letterSpacing: 0, lineHeight: 1.25, textTransform: 'none' }}>واصفہ ڈائیگناسٹکس</div>
           </div>
         </div>
       </div>

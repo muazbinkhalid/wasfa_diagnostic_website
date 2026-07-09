@@ -1,6 +1,6 @@
 'use client'
 
-import Image from 'next/image'
+
 import { usePathname } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import { LogOut, UserRound } from 'lucide-react'
@@ -41,16 +41,6 @@ export default function TopUtilityBar({
   return (
     <header className={styles.topUtilityBar}>
       <div className={styles.titleCluster}>
-        <span className={styles.titleIcon} aria-hidden="true">
-          <Image
-            src="/logo.png"
-            alt=""
-            width={30}
-            height={30}
-            className={styles.titleLogo}
-            priority
-          />
-        </span>
         <div>
           <span className={styles.pageKicker}>Patient portal</span>
           <h1 className={styles.pageTitle}>{getPageTitle()}</h1>

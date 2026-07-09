@@ -10,7 +10,7 @@ const doctors = [
   {
     index: "01",
     name: "Dr. Khalid Mehmood",
-    role: "Senior Radiologist",
+    role: "CEO & Senior Consultent",
     qualifications: "MBBS, DCPS, MCPS",
     description:
       "Specializing in general and interventional diagnostic imaging with over a decade of clinical experience.",
@@ -18,8 +18,8 @@ const doctors = [
   {
     index: "02",
     name: "Dr. Wasfa Gul",
-    role: "Consultant Radiologist",
-    qualifications: "FCPS (Diagnostic Radiology)",
+    role: "Consultant Radiologist and Ex Assistant Professor",
+    qualifications: "MBBS(Gold Medalist), FCPS (Diagnostic Radiology)",
     description:
       "Expert in high-end cross-sectional imaging, including MRI, CT, and ultrasound diagnostics.",
   },
@@ -38,8 +38,8 @@ export default function DoctorsSection() {
   };
 
   const itemVariants = {
-    hidden: { 
-      opacity: 0, 
+    hidden: {
+      opacity: 0,
       y: shouldReduceMotion ? 0 : (isMobile ? 0 : 12),
       scale: isMobile ? 0.98 : 1
     },
@@ -55,7 +55,7 @@ export default function DoctorsSection() {
     <section id="doctors" className={styles.doctorsSection} aria-labelledby="doctors-heading">
       <div className={styles.backgroundAtmosphere} aria-hidden="true" />
       <div className={styles.readabilityOverlay} aria-hidden="true" />
-      
+
       <motion.div
         className={styles.container}
         variants={sectionVariants}
@@ -73,7 +73,7 @@ export default function DoctorsSection() {
             Expert eyes behind every diagnosis.
           </h2>
           <p className={styles.bodyCopy}>
-            Wasfa brings together experienced radiologists with expertise across general, interventional, and advanced cross-sectional imaging.
+            Wasfa Diagnostic Centre brings together experienced radiologists with expertise across general, interventional, and advanced cross-sectional imaging.
           </p>
         </motion.div>
       </motion.div>

@@ -44,7 +44,7 @@ export default function SignInPage() {
         </section>
 
         <aside className={styles.brandSection}>
-          <div className={styles.urduWatermark} aria-hidden="true">وصفہ</div>
+          <div className={styles.urduWatermark} aria-hidden="true">واصفہ</div>
 
           <div className={styles.brandContent}>
             <div className={styles.decorativeLine}></div>

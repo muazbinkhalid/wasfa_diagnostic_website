@@ -1,5 +1,4 @@
-import Link from 'next/link'
-import { ArrowLeft, ShieldCheck } from 'lucide-react'
+import { ShieldCheck } from 'lucide-react'
 import ChangePasswordForm from './ChangePasswordForm'
 import styles from '@/components/portal/PortalDashboard.module.css'
 
@@ -19,10 +18,6 @@ export default function ChangePasswordPage() {
               <p className={styles.sectionSubtitle}>Set a secure password for your patient portal account</p>
             </div>
           </div>
-          <Link href="/patient-portal/dashboard" className={styles.button}>
-            <ArrowLeft size={16} />
-            Dashboard
-          </Link>
         </div>
 
         <ChangePasswordForm />
