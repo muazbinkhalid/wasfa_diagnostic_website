@@ -1,12 +1,23 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { LayoutDashboard, FileText, ClipboardList, User } from 'lucide-react'
+import {
+  ClipboardList,
+  FileText,
+  LayoutDashboard,
+  PanelLeftClose,
+  PanelLeftOpen,
+  ShieldCheck,
+  User,
+} from 'lucide-react'
+import { useState } from 'react'
 import styles from './PortalShell.module.css'
 
 export default function DesktopSidebar() {
   const pathname = usePathname()
+  const [isCollapsed, setIsCollapsed] = useState(false)
 
   const navItems = [
     { label: 'Overview', href: '/patient-portal/dashboard', icon: LayoutDashboard },
@@ -16,10 +27,33 @@ export default function DesktopSidebar() {
   ]
 
   return (
-    <aside className={styles.desktopSidebar}>
+    <aside className={`${styles.desktopSidebar} ${isCollapsed ? styles.desktopSidebarCollapsed : ''}`}>
       <div className={styles.brandHeader}>
-        <div className={styles.brandText}>Wasfa Portal</div>
-        <span className={styles.brandSubtext}>Patient diagnostics</span>
+        <div className={styles.brandLockup}>
+          <span className={styles.brandMark}>
+            <Image
+              src="/logo.png"
+              alt="Wasfa Diagnostic Centre"
+              width={36}
+              height={36}
+              className={styles.brandLogo}
+              priority
+            />
+          </span>
+          <div className={styles.brandCopy}>
+            <div className={styles.brandText}>Wasfa Portal</div>
+            <span className={styles.brandSubtext}>Patient diagnostics</span>
+          </div>
+        </div>
+        <button
+          type="button"
+          className={styles.collapseButton}
+          onClick={() => setIsCollapsed((current) => !current)}
+          aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+        >
+          {isCollapsed ? <PanelLeftOpen size={17} /> : <PanelLeftClose size={17} />}
+        </button>
       </div>
       
       <nav className={styles.navRail}>
@@ -32,13 +66,24 @@ export default function DesktopSidebar() {
               key={item.href} 
               href={item.href}
               className={`${styles.navItem} ${isActive ? styles.navItemActive : ''}`}
+              aria-current={isActive ? 'page' : undefined}
             >
               <Icon className={styles.icon} />
-              <span>{item.label}</span>
+              <span className={styles.navLabel}>{item.label}</span>
             </Link>
           )
         })}
       </nav>
+
+      <div className={styles.sidebarFooter}>
+        <span className={styles.sidebarFooterIcon}>
+          <ShieldCheck size={16} />
+        </span>
+        <div className={styles.sidebarFooterCopy}>
+          <div className={styles.sidebarFooterTitle}>Secure portal</div>
+          <p className={styles.sidebarFooterText}>Encrypted patient access</p>
+        </div>
+      </div>
     </aside>
   )
 }

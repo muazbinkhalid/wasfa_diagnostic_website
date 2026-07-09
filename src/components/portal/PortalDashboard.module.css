@@ -1,6 +1,7 @@
 .page {
-  width: min(100%, 1180px);
+  width: min(100%, 1200px);
   margin: 0 auto;
+  animation: dashboardIn 0.48s ease-out both;
 }
 
 .narrowPage {
@@ -10,7 +11,7 @@
 
 .stack {
   display: grid;
-  gap: 1rem;
+  gap: 1.05rem;
 }
 
 .overviewHero {
@@ -25,12 +26,15 @@
 .metricCard,
 .recordShell,
 .filterBar {
-  background: rgba(255, 253, 253, 0.88);
-  border: 1px solid rgba(234, 215, 220, 0.9);
-  border-radius: 16px;
-  box-shadow: 0 14px 38px rgba(65, 24, 38, 0.07);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background:
+    linear-gradient(180deg, rgba(255, 253, 253, 0.92) 0%, rgba(255, 248, 250, 0.78) 100%);
+  border: 1px solid rgba(234, 215, 220, 0.78);
+  border-radius: 18px;
+  box-shadow:
+    0 18px 48px rgba(65, 24, 38, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
 
 .panel,
@@ -41,20 +45,24 @@
 .heroPanel {
   position: relative;
   overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(117, 13, 44, 0.96) 0%, rgba(177, 18, 59, 0.92) 54%, rgba(200, 143, 145, 0.84) 100%);
+  color: var(--color-surface);
+  min-height: 100%;
 }
 
 .heroPanel::after {
   content: "";
   position: absolute;
-  inset: auto -18% -45% auto;
-  width: 280px;
-  height: 280px;
-  background: radial-gradient(circle, rgba(177, 18, 59, 0.13), transparent 66%);
+  inset: 0;
+  background:
+    linear-gradient(120deg, rgba(255, 255, 255, 0.16), transparent 28%),
+    linear-gradient(180deg, transparent 45%, rgba(36, 23, 28, 0.12));
   pointer-events: none;
 }
 
 .eyebrow {
-  color: var(--color-cherry);
+  color: rgba(255, 255, 255, 0.78);
   display: block;
   font-size: 0.73rem;
   font-weight: 800;
@@ -64,21 +72,60 @@
 }
 
 .heroTitle {
-  color: var(--color-ink);
+  color: var(--color-surface);
   font-size: clamp(1.6rem, 4vw, 2.45rem);
   font-weight: 750;
-  letter-spacing: -0.03em;
+  letter-spacing: 0;
   line-height: 1.05;
   margin: 0;
   text-wrap: balance;
 }
 
 .heroMeta {
-  color: var(--color-ink-muted);
+  color: rgba(255, 255, 255, 0.82);
   font-size: 0.95rem;
   line-height: 1.55;
   margin-top: 0.75rem;
   max-width: 62ch;
+}
+
+.heroPanel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.heroHighlights {
+  display: grid;
+  gap: 0.6rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 1rem;
+}
+
+.heroHighlight {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 14px;
+  min-width: 0;
+  padding: 0.72rem 0.78rem;
+}
+
+.highlightValue {
+  color: var(--color-surface);
+  display: block;
+  font-size: clamp(1rem, 2vw, 1.22rem);
+  font-weight: 820;
+  letter-spacing: 0;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+.highlightLabel {
+  color: rgba(255, 255, 255, 0.76);
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-top: 0.25rem;
 }
 
 .identityGrid {
@@ -89,9 +136,9 @@
 }
 
 .identityItem {
-  background: rgba(255, 248, 250, 0.8);
-  border: 1px solid rgba(234, 215, 220, 0.72);
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.13);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 14px;
   min-width: 0;
   padding: 0.75rem;
 }
@@ -106,6 +153,18 @@
   text-transform: uppercase;
 }
 
+.srOnly {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
 .value {
   color: var(--color-ink);
   display: block;
@@ -113,6 +172,14 @@
   font-weight: 650;
   line-height: 1.35;
   overflow-wrap: anywhere;
+}
+
+.heroPanel .label {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.heroPanel .value {
+  color: var(--color-surface);
 }
 
 .metricsGrid {
@@ -126,13 +193,34 @@
   gap: 0.85rem;
   min-height: 116px;
   padding: 1rem;
+  overflow: hidden;
+  position: relative;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.metricCard::before {
+  background: linear-gradient(180deg, rgba(177, 18, 59, 0.5), rgba(200, 143, 145, 0.16));
+  border-radius: 999px;
+  content: "";
+  inset: 1rem auto 1rem 0;
+  opacity: 0.75;
+  position: absolute;
+  width: 3px;
+}
+
+.metricCard:hover {
+  border-color: rgba(177, 18, 59, 0.2);
+  box-shadow:
+    0 22px 54px rgba(65, 24, 38, 0.11),
+    inset 0 1px 0 rgba(255, 255, 255, 0.88);
+  transform: translateY(-2px);
 }
 
 .metricIcon,
 .sectionIcon,
 .emptyIcon {
   align-items: center;
-  border-radius: 12px;
+  border-radius: 13px;
   display: inline-flex;
   flex: 0 0 auto;
   height: 42px;
@@ -141,22 +229,22 @@
 }
 
 .metricIconCherry {
-  background: rgba(177, 18, 59, 0.1);
+  background: linear-gradient(145deg, rgba(177, 18, 59, 0.14), rgba(177, 18, 59, 0.06));
   color: var(--color-cherry);
 }
 
 .metricIconGreen {
-  background: rgba(16, 185, 129, 0.1);
+  background: linear-gradient(145deg, rgba(16, 185, 129, 0.14), rgba(16, 185, 129, 0.06));
   color: #047857;
 }
 
 .metricIconAmber {
-  background: rgba(245, 158, 11, 0.13);
+  background: linear-gradient(145deg, rgba(245, 158, 11, 0.16), rgba(245, 158, 11, 0.06));
   color: #b45309;
 }
 
 .metricIconRose {
-  background: rgba(200, 143, 145, 0.16);
+  background: linear-gradient(145deg, rgba(200, 143, 145, 0.2), rgba(200, 143, 145, 0.08));
   color: var(--color-cherry-deep);
 }
 
@@ -168,7 +256,7 @@
   color: var(--color-ink);
   font-size: clamp(1.35rem, 3vw, 1.8rem);
   font-weight: 800;
-  letter-spacing: -0.03em;
+  letter-spacing: 0;
   line-height: 1.05;
 }
 
@@ -209,7 +297,8 @@
 }
 
 .sectionIcon {
-  background: rgba(177, 18, 59, 0.09);
+  background: linear-gradient(145deg, rgba(177, 18, 59, 0.12), rgba(177, 18, 59, 0.05));
+  border: 1px solid rgba(177, 18, 59, 0.08);
   color: var(--color-cherry);
   height: 36px;
   width: 36px;
@@ -219,7 +308,7 @@
   color: var(--color-ink);
   font-size: 1rem;
   font-weight: 750;
-  letter-spacing: -0.015em;
+  letter-spacing: 0;
   margin: 0;
 }
 
@@ -239,14 +328,23 @@
 .reportItem,
 .profileRow {
   align-items: center;
-  background: rgba(255, 248, 250, 0.66);
-  border: 1px solid rgba(234, 215, 220, 0.66);
-  border-radius: 12px;
+  background: rgba(255, 253, 253, 0.68);
+  border: 1px solid rgba(234, 215, 220, 0.7);
+  border-radius: 14px;
   display: flex;
   gap: 0.75rem;
   justify-content: space-between;
   min-width: 0;
   padding: 0.82rem;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.activityItem:hover,
+.reportItem:hover,
+.profileRow:hover {
+  background: rgba(255, 248, 250, 0.9);
+  border-color: rgba(177, 18, 59, 0.16);
+  transform: translateY(-1px);
 }
 
 .activityMain,
@@ -287,6 +385,7 @@
 
 .statusPill {
   background: rgba(177, 18, 59, 0.09);
+  border: 1px solid rgba(177, 18, 59, 0.1);
   color: var(--color-cherry);
 }
 
@@ -315,7 +414,7 @@
 .segmentedControl {
   background: rgba(255, 248, 250, 0.92);
   border: 1px solid rgba(234, 215, 220, 0.8);
-  border-radius: 12px;
+  border-radius: 14px;
   display: inline-grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   padding: 0.25rem;
@@ -324,7 +423,7 @@
 .segmentButton {
   background: transparent;
   border: 0;
-  border-radius: 9px;
+  border-radius: 10px;
   color: var(--color-ink-muted);
   cursor: pointer;
   font: inherit;
@@ -336,14 +435,19 @@
 }
 
 .segmentButtonActive {
-  background: var(--color-surface);
-  box-shadow: 0 7px 18px rgba(65, 24, 38, 0.08);
-  color: var(--color-cherry);
+  background: linear-gradient(135deg, var(--color-cherry) 0%, var(--color-cherry-deep) 100%);
+  box-shadow: 0 9px 20px rgba(177, 18, 59, 0.18);
+  color: var(--color-surface);
+}
+
+.segmentButtonActive:hover {
+  color: var(--color-surface);
 }
 
 .filterControls {
   display: flex;
   gap: 0.6rem;
+  min-width: 0;
 }
 
 .searchField,
@@ -351,7 +455,7 @@
 .input {
   background: rgba(255, 253, 253, 0.96);
   border: 1px solid rgba(234, 215, 220, 0.95);
-  border-radius: 11px;
+  border-radius: 12px;
   color: var(--color-ink);
   font: inherit;
   font-size: 0.88rem;
@@ -361,8 +465,14 @@
 }
 
 .searchWrap {
+  display: block;
   position: relative;
   width: min(48vw, 280px);
+}
+
+.monthWrap {
+  display: block;
+  flex: 0 0 auto;
 }
 
 .searchIcon {
@@ -384,6 +494,7 @@
 
 .monthField {
   padding: 0 0.75rem;
+  width: 164px;
 }
 
 .searchField:focus,
@@ -404,11 +515,57 @@
 .table {
   border-collapse: collapse;
   min-width: 760px;
+  table-layout: fixed;
   width: 100%;
 }
 
+.recordsTable,
+.reportsTable {
+  width: 100%;
+}
+
+.recordsDateCol {
+  width: 15%;
+}
+
+.recordsTitleCol {
+  width: 25%;
+}
+
+.recordsReceivedCol {
+  width: 20%;
+}
+
+.recordsAmountCol {
+  width: 15%;
+}
+
+.recordsDueCol {
+  width: 12%;
+}
+
+.recordsStatusCol {
+  width: 13%;
+}
+
+.reportsNameCol {
+  width: 38%;
+}
+
+.reportsUploadedCol {
+  width: 20%;
+}
+
+.reportsStatusCol {
+  width: 16%;
+}
+
+.reportsActionCol {
+  width: 26%;
+}
+
 .table th {
-  background: rgba(255, 248, 250, 0.72);
+  background: rgba(255, 248, 250, 0.9);
   border-bottom: 1px solid rgba(234, 215, 220, 0.78);
   color: var(--color-ink-muted);
   font-size: 0.72rem;
@@ -417,14 +574,22 @@
   padding: 0.85rem 1rem;
   text-align: left;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .table td {
   border-bottom: 1px solid rgba(234, 215, 220, 0.56);
   color: var(--color-ink-muted);
   font-size: 0.88rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
   padding: 0.9rem 1rem;
   vertical-align: middle;
+}
+
+.table td:last-child,
+.table th:last-child {
+  padding-right: 1.25rem;
 }
 
 .table tr:last-child td {
@@ -432,7 +597,7 @@
 }
 
 .table tr:hover td {
-  background: rgba(255, 248, 250, 0.58);
+  background: rgba(255, 248, 250, 0.74);
 }
 
 .strongCell {
@@ -442,6 +607,11 @@
 
 .rightCell {
   text-align: right;
+  white-space: nowrap;
+}
+
+.rightCell .primaryButton {
+  margin-left: auto;
 }
 
 .mobileList {
@@ -449,6 +619,7 @@
 }
 
 .mobileCard {
+  background: rgba(255, 253, 253, 0.58);
   border-bottom: 1px solid rgba(234, 215, 220, 0.66);
   padding: 1rem;
 }
@@ -478,7 +649,7 @@
 
 .pagination {
   align-items: center;
-  background: rgba(255, 248, 250, 0.5);
+  background: rgba(255, 248, 250, 0.64);
   border-top: 1px solid rgba(234, 215, 220, 0.72);
   display: flex;
   justify-content: space-between;
@@ -500,7 +671,7 @@
 .primaryButton,
 .dangerButton {
   align-items: center;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
   display: inline-flex;
   font: inherit;
@@ -523,15 +694,15 @@
 .primaryButton {
   background: linear-gradient(135deg, var(--color-cherry) 0%, var(--color-cherry-deep) 100%);
   border: 1px solid rgba(177, 18, 59, 0.18);
-  box-shadow: 0 10px 24px rgba(177, 18, 59, 0.16);
+  box-shadow: 0 12px 26px rgba(177, 18, 59, 0.18);
   color: var(--color-surface);
   padding: 0 0.9rem;
 }
 
 .dangerButton {
-  background: #fff7ed;
-  border: 1px solid #fed7aa;
-  color: #b45309;
+  background: linear-gradient(135deg, #fff7ed 0%, #fff1f2 100%);
+  border: 1px solid rgba(244, 63, 94, 0.22);
+  color: #be123c;
   padding: 0 0.9rem;
 }
 
@@ -550,6 +721,7 @@
 
 .primaryButton:hover,
 .dangerButton:hover {
+  box-shadow: 0 16px 30px rgba(177, 18, 59, 0.16);
   transform: translateY(-1px);
 }
 
@@ -567,13 +739,17 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background:
+    linear-gradient(180deg, rgba(255, 253, 253, 0.34), rgba(255, 248, 250, 0.46));
+  border-radius: 16px;
   min-height: 210px;
   padding: 2rem 1rem;
   text-align: center;
 }
 
 .emptyIcon {
-  background: rgba(177, 18, 59, 0.08);
+  background: linear-gradient(145deg, rgba(177, 18, 59, 0.12), rgba(177, 18, 59, 0.05));
+  border: 1px solid rgba(177, 18, 59, 0.08);
   color: var(--color-cherry);
   height: 48px;
   margin-bottom: 0.8rem;
@@ -654,6 +830,86 @@
   color: #047857;
 }
 
+.passwordRules {
+  display: grid;
+  gap: 0.45rem;
+  list-style: none;
+}
+
+.passwordRule,
+.passwordRuleValid {
+  align-items: center;
+  border-radius: 10px;
+  display: flex;
+  font-size: 0.8rem;
+  font-weight: 650;
+  gap: 0.5rem;
+  line-height: 1.4;
+  padding: 0.52rem 0.65rem;
+}
+
+.passwordRule {
+  background: rgba(255, 248, 250, 0.72);
+  border: 1px solid rgba(234, 215, 220, 0.82);
+  color: var(--color-ink-muted);
+}
+
+.passwordRuleValid {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #047857;
+}
+
+.passwordRule span,
+.passwordRuleValid span {
+  align-items: center;
+  border-radius: 999px;
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-size: 0.66rem;
+  height: 20px;
+  justify-content: center;
+  width: 28px;
+}
+
+.passwordRule span {
+  background: rgba(120, 99, 108, 0.1);
+}
+
+.passwordRuleValid span {
+  background: rgba(4, 120, 87, 0.1);
+}
+
+.sessionCard {
+  background:
+    linear-gradient(135deg, rgba(177, 18, 59, 0.09), rgba(255, 248, 250, 0.92));
+  border: 1px solid rgba(177, 18, 59, 0.13);
+  border-radius: 14px;
+  margin-bottom: 0.85rem;
+  padding: 0.9rem;
+}
+
+.sessionLabel {
+  color: var(--color-cherry);
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+}
+
+.sessionText {
+  color: var(--color-ink-muted);
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.logoutPanelButton {
+  min-height: 44px;
+  width: 100%;
+}
+
 .formActions {
   align-items: center;
   display: flex;
@@ -691,8 +947,17 @@
     width: 100%;
   }
 
+  .monthWrap,
+  .monthField {
+    width: 100%;
+  }
+
   .segmentedControl {
     width: 100%;
+  }
+
+  .segmentButton {
+    padding: 0 0.75rem;
   }
 
   .tableWrap {
@@ -728,6 +993,10 @@
     min-height: 96px;
   }
 
+  .heroHighlights {
+    grid-template-columns: 1fr;
+  }
+
   .activityItem,
   .reportItem {
     align-items: flex-start;
@@ -741,5 +1010,44 @@
 
   .formActions > * {
     width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page {
+    animation: none;
+  }
+
+  .metricCard,
+  .activityItem,
+  .reportItem,
+  .profileRow,
+  .button,
+  .iconButton,
+  .primaryButton,
+  .dangerButton,
+  .segmentButton {
+    transition: none;
+  }
+
+  .metricCard:hover,
+  .activityItem:hover,
+  .reportItem:hover,
+  .profileRow:hover,
+  .primaryButton:hover,
+  .dangerButton:hover {
+    transform: none;
+  }
+}
+
+@keyframes dashboardIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

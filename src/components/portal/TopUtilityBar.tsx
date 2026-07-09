@@ -1,8 +1,9 @@
 'use client'
 
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useRouter } from 'next/navigation'
-import { LogOut } from 'lucide-react'
+import { LogOut, UserRound } from 'lucide-react'
 import { switchActiveProfile, signOut } from '@/app/patient-portal/portal-actions'
 import styles from './PortalShell.module.css'
 
@@ -39,26 +40,45 @@ export default function TopUtilityBar({
 
   return (
     <header className={styles.topUtilityBar}>
-      <h1 className={styles.pageTitle}>{getPageTitle()}</h1>
+      <div className={styles.titleCluster}>
+        <span className={styles.titleIcon} aria-hidden="true">
+          <Image
+            src="/logo.png"
+            alt=""
+            width={30}
+            height={30}
+            className={styles.titleLogo}
+            priority
+          />
+        </span>
+        <div>
+          <span className={styles.pageKicker}>Patient portal</span>
+          <h1 className={styles.pageTitle}>{getPageTitle()}</h1>
+        </div>
+      </div>
 
       <div className={styles.utilityActions}>
         {profiles.length > 1 && (
-          <select 
-            className={styles.profileSelect}
-            value={activeProfileId}
-            onChange={handleProfileChange}
-            aria-label="Switch active patient profile"
-          >
-            {profiles.map((p) => (
-              <option key={p.id} value={p.id}>
-                {p.full_name} ({p.mrn})
-              </option>
-            ))}
-          </select>
+          <label className={styles.profileSelectWrap}>
+            <UserRound size={16} aria-hidden="true" />
+            <select 
+              className={styles.profileSelect}
+              value={activeProfileId}
+              onChange={handleProfileChange}
+              aria-label="Switch active patient profile"
+            >
+              {profiles.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.full_name} ({p.mrn})
+                </option>
+              ))}
+            </select>
+          </label>
         )}
 
         {profiles.length === 1 && (
           <span className={styles.activeProfileName}>
+            <UserRound size={16} aria-hidden="true" />
             {profiles[0].full_name}
           </span>
         )}

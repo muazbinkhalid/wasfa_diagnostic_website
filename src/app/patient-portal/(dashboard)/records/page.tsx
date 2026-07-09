@@ -33,6 +33,7 @@ type CheckupRecord = {
 type DisplayRecord = {
   id: string
   title: string
+  titleLabel: string
   visitDate: string | null
   receivedBy: string
   paidAmount: number
@@ -120,6 +121,7 @@ export default async function RecordsPage(props: {
     records = testRecords.map((record) => ({
       id: record.id,
       title: record.test_advised || record.reference || 'Lab test',
+      titleLabel: 'Test advised',
       visitDate: record.visit_date,
       receivedBy: record.received_by || 'Not available',
       paidAmount: toNumber(record.fee_received),
@@ -149,7 +151,8 @@ export default async function RecordsPage(props: {
 
     records = checkupRecords.map((record) => ({
       id: record.id,
-      title: record.reference || 'Clinical checkup',
+      title: record.reference || 'Not available',
+      titleLabel: 'Referring doctor',
       visitDate: record.visit_date,
       receivedBy: record.received_by || 'Not available',
       paidAmount: toNumber(record.fee_paid),
@@ -179,11 +182,19 @@ export default async function RecordsPage(props: {
         ) : (
           <>
             <div className={styles.tableWrap}>
-              <table className={styles.table}>
+              <table className={`${styles.table} ${styles.recordsTable}`}>
+                <colgroup>
+                  <col className={styles.recordsDateCol} />
+                  <col className={styles.recordsTitleCol} />
+                  <col className={styles.recordsReceivedCol} />
+                  <col className={styles.recordsAmountCol} />
+                  <col className={styles.recordsDueCol} />
+                  <col className={styles.recordsStatusCol} />
+                </colgroup>
                 <thead>
                   <tr>
                     <th>Date</th>
-                    <th>{tab === 'tests' ? 'Test advised' : 'Checkup reference'}</th>
+                    <th>{tab === 'tests' ? 'Test advised' : 'Referring doctor'}</th>
                     <th>Received by</th>
                     <th className={styles.rightCell}>{tab === 'tests' ? 'Fee received' : 'Fee paid'}</th>
                     <th className={styles.rightCell}>Fee due</th>
@@ -194,7 +205,9 @@ export default async function RecordsPage(props: {
                   {records.map((record) => (
                     <tr key={record.id}>
                       <td className={styles.strongCell}>{formatDate(record.visitDate)}</td>
-                      <td className={styles.strongCell}>{record.title}</td>
+                      <td className={styles.strongCell}>
+                        {tab === 'checkups' ? `Referred by: ${record.title}` : record.title}
+                      </td>
                       <td>{record.receivedBy}</td>
                       <td className={styles.rightCell}>{formatCurrency(record.paidAmount)}</td>
                       <td className={styles.rightCell}>{formatCurrency(record.dueAmount)}</td>
@@ -214,7 +227,12 @@ export default async function RecordsPage(props: {
                 <article className={styles.mobileCard} key={record.id}>
                   <div className={styles.mobileCardTop}>
                     <div>
-                      <div className={styles.itemTitle}>{record.title}</div>
+                      <div className={styles.itemTitle}>
+                        {tab === 'checkups' ? 'Clinical checkup' : record.title}
+                      </div>
+                      <div className={styles.itemMeta}>
+                        {tab === 'checkups' ? `Referred by: ${record.title}` : `${record.titleLabel}: ${record.title}`}
+                      </div>
                       <div className={styles.itemMeta}>{formatDate(record.visitDate)}</div>
                     </div>
                     <span className={record.dueAmount > 0 ? styles.duePill : styles.paidPill}>

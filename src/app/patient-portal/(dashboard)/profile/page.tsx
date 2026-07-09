@@ -141,10 +141,19 @@ export default async function ProfilePage() {
               </div>
             </div>
 
+            <div className={styles.sessionCard}>
+              <div>
+                <span className={styles.sessionLabel}>Current browser</span>
+                <p className={styles.sessionText}>
+                  End this portal session when you are finished reviewing records.
+                </p>
+              </div>
+            </div>
+
             <form action={signOut}>
-              <button type="submit" className={styles.dangerButton}>
+              <button type="submit" className={`${styles.dangerButton} ${styles.logoutPanelButton}`}>
                 <LogOut size={16} />
-                Logout
+                Sign out securely
               </button>
             </form>
           </div>

@@ -65,19 +65,19 @@ export function RecordsFilterBarInner() {
 
       <div className={styles.filterControls}>
         <label className={styles.searchWrap}>
-          <span className={styles.label}>Search records</span>
+          <span className={styles.srOnly}>Search records</span>
           <Search className={styles.searchIcon} aria-hidden="true" />
           <input
             type="text"
-            placeholder="Search reference or test"
+            placeholder={currentTab === 'checkups' ? 'Search referring doctor' : 'Search reference or test'}
             value={localQuery}
             onChange={(e) => setLocalQuery(e.target.value)}
             className={styles.searchField}
           />
         </label>
 
-        <label>
-          <span className={styles.label}>Month</span>
+        <label className={styles.monthWrap}>
+          <span className={styles.srOnly}>Month</span>
           <input
             type="month"
             value={currentMonth}

@@ -166,7 +166,7 @@ export default async function DashboardOverviewPage() {
     })),
     ...checkups.slice(0, 4).map((checkup) => ({
       id: `checkup-${checkup.id}`,
-      title: checkup.reference || 'Clinical checkup',
+      title: checkup.reference ? `Referred by: ${checkup.reference}` : 'Clinical checkup',
       meta: `Checkup visit on ${formatDate(checkup.visit_date)}`,
       dateValue: checkup.visit_date ? new Date(checkup.visit_date).getTime() : 0,
       status: toNumber(checkup.fee_due) > 0 ? 'Due' : 'Paid',
@@ -189,6 +189,21 @@ export default async function DashboardOverviewPage() {
           <p className={styles.heroMeta}>
             A focused view of this patient&apos;s latest diagnostics, reports, and billing status.
           </p>
+
+          <div className={styles.heroHighlights} aria-label="Patient portal highlights">
+            <div className={styles.heroHighlight}>
+              <span className={styles.highlightValue}>{reports.length}</span>
+              <span className={styles.highlightLabel}>Ready reports</span>
+            </div>
+            <div className={styles.heroHighlight}>
+              <span className={styles.highlightValue}>{pendingReports.length}</span>
+              <span className={styles.highlightLabel}>In progress</span>
+            </div>
+            <div className={styles.heroHighlight}>
+              <span className={styles.highlightValue}>{formatCurrency(dueAmount)}</span>
+              <span className={styles.highlightLabel}>Balance due</span>
+            </div>
+          </div>
 
           <div className={styles.identityGrid}>
             <div className={styles.identityItem}>
@@ -233,7 +248,9 @@ export default async function DashboardOverviewPage() {
             </div>
             <div className={styles.activityItem}>
               <div className={styles.activityMain}>
-                <div className={styles.itemTitle}>{latestCheckup?.reference || 'No checkups yet'}</div>
+                <div className={styles.itemTitle}>
+                  {latestCheckup?.reference ? `Referred by: ${latestCheckup.reference}` : 'No checkups yet'}
+                </div>
                 <div className={styles.itemMeta}>Latest checkup: {formatDate(latestCheckup?.visit_date)}</div>
               </div>
               <span className={styles.statusPill}>Checkup</span>

@@ -120,7 +120,13 @@ export default async function ReportsPage() {
         ) : (
           <>
             <div className={styles.tableWrap}>
-              <table className={styles.table}>
+              <table className={`${styles.table} ${styles.reportsTable}`}>
+                <colgroup>
+                  <col className={styles.reportsNameCol} />
+                  <col className={styles.reportsUploadedCol} />
+                  <col className={styles.reportsStatusCol} />
+                  <col className={styles.reportsActionCol} />
+                </colgroup>
                 <thead>
                   <tr>
                     <th>Report</th>
