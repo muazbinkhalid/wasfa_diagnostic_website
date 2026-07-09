@@ -65,19 +65,6 @@ export async function middleware(request: NextRequest) {
     return redirectResponse
   }
 
-  // AGGRESSIVE SESSION TERMINATION:
-  // Only terminate if the user navigates explicitly to the home page (/).
-  // Terminating on any non-patient-portal path risks breaking static assets and browser requests.
-  if (pathname === '/') {
-    if (user) {
-      // The user is leaving the portal, kill the session
-      await supabase.auth.signOut()
-      
-      // Clear the local profile cookie as well
-      supabaseResponse.cookies.set('wasfa_active_profile', '', { maxAge: 0, path: '/' })
-    }
-  }
-
   return supabaseResponse
 }
 

@@ -4,6 +4,7 @@ import DesktopSidebar from '@/components/portal/DesktopSidebar'
 import TopUtilityBar from '@/components/portal/TopUtilityBar'
 import MobileTabBar from '@/components/portal/MobileTabBar'
 import { getSecureActiveProfileId } from '@/utils/profile'
+import SessionTimeout from '@/components/portal/SessionTimeout'
 import styles from '@/components/portal/PortalShell.module.css'
 
 export default async function DashboardLayout({
@@ -52,6 +53,7 @@ export default async function DashboardLayout({
 
   return (
     <div className={styles.layout}>
+      <SessionTimeout timeoutMinutes={15} />
       <DesktopSidebar />
       <div className={styles.mainWrapper}>
         <TopUtilityBar 
