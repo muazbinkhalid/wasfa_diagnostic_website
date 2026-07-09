@@ -116,6 +116,10 @@
   padding: 0.9rem 0.65rem;
 }
 
+.desktopSidebarCollapsed .brandLockup {
+  gap: 0;
+}
+
 .desktopSidebarCollapsed .brandCopy,
 .desktopSidebarCollapsed .navLabel,
 .desktopSidebarCollapsed .sidebarFooterCopy {
@@ -211,6 +215,7 @@
   justify-content: center;
   margin: 1rem 0.6rem 0.75rem;
   padding: 0.6rem;
+  gap: 0;
 }
 
 .sidebarFooterIcon {

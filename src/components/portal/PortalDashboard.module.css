@@ -605,6 +605,8 @@
   font-weight: 700;
 }
 
+.table th.rightCell,
+.table td.rightCell,
 .rightCell {
   text-align: right;
   white-space: nowrap;

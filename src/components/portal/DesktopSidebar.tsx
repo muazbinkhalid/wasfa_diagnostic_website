@@ -41,19 +41,9 @@ export default function DesktopSidebar() {
             />
           </span>
           <div className={styles.brandCopy}>
-            <div className={styles.brandText}>Wasfa Portal</div>
-            <span className={styles.brandSubtext}>Patient diagnostics</span>
+            <div className={styles.brandText} lang="ur" dir="rtl" style={{ fontFamily: 'var(--font-urdu), serif', fontSize: '1.35rem', fontWeight: 600, letterSpacing: 0, lineHeight: 1.25, textTransform: 'none' }}>وصفہ ڈائیگناسٹکس</div>
           </div>
         </div>
-        <button
-          type="button"
-          className={styles.collapseButton}
-          onClick={() => setIsCollapsed((current) => !current)}
-          aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-          title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-        >
-          {isCollapsed ? <PanelLeftOpen size={17} /> : <PanelLeftClose size={17} />}
-        </button>
       </div>
       
       <nav className={styles.navRail}>
@@ -83,6 +73,19 @@ export default function DesktopSidebar() {
           <div className={styles.sidebarFooterTitle}>Secure portal</div>
           <p className={styles.sidebarFooterText}>Encrypted patient access</p>
         </div>
+      </div>
+      
+      <div style={{ padding: '0 0.75rem 0.75rem' }}>
+        <button
+          type="button"
+          className={styles.collapseButton}
+          style={{ width: '100%' }}
+          onClick={() => setIsCollapsed((current) => !current)}
+          aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+        >
+          {isCollapsed ? <PanelLeftOpen size={17} /> : <PanelLeftClose size={17} />}
+        </button>
       </div>
     </aside>
   )
