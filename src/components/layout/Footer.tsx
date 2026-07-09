@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import Link from "next/link";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import styles from "./Footer.module.css";
@@ -35,10 +35,10 @@ export default function Footer() {
           <nav className={styles.navColumn} aria-label="Footer Navigation">
             <span className={styles.groupTitle} aria-hidden="true">Navigation</span>
             <ul className={styles.navList}>
-              <li><Link href="#about" className={styles.link}>About</Link></li>
-              <li><Link href="#services" className={styles.link}>Services</Link></li>
-              <li><Link href="#doctors" className={styles.link}>Doctors</Link></li>
-              <li><Link href="#patient-portal" className={styles.link}>Patient Portal</Link></li>
+              <li><Link href="/#about" className={styles.link}>About</Link></li>
+              <li><Link href="/#services" className={styles.link}>Services</Link></li>
+              <li><Link href="/#doctors" className={styles.link}>Doctors</Link></li>
+              <li><Link href="/#patient-portal" className={styles.link}>Patient Portal</Link></li>
             </ul>
           </nav>
 

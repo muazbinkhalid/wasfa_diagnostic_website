@@ -34,6 +34,12 @@ export default function AboutSection() {
     },
   };
 
+  const principles = [
+    "Clear guidance",
+    "Respectful care",
+    "Reliable reporting",
+  ];
+
   return (
     <section id="about" className={styles.aboutSection} aria-label="About Wasfa Diagnostic Centre">
       <div className={styles.backgroundAtmosphere} aria-hidden="true" />
@@ -67,6 +73,13 @@ export default function AboutSection() {
           <p className={styles.bodyCopy}>
             Wasfa Diagnostic Centre brings modern diagnostic care together with a calm, respectful atmosphere. The experience is designed to feel clear from the first step in, with thoughtful service and dependable attention throughout.
           </p>
+          <div className={styles.principles} aria-label="Wasfa care principles">
+            {principles.map((principle) => (
+              <span key={principle} className={styles.principlePill}>
+                {principle}
+              </span>
+            ))}
+          </div>
         </motion.div>
       </motion.div>
     </section>

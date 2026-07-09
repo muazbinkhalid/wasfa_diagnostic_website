@@ -23,6 +23,10 @@
   align-items: center;
 }
 
+.mobileSwapContainer {
+  touch-action: manipulation;
+}
+
 .card {
   position: absolute;
   width: 100%;
@@ -32,7 +36,7 @@
   /* Rose Gold Theme */
   background: linear-gradient(135deg, rgba(253, 248, 249, 0.95) 0%, rgba(243, 223, 229, 0.95) 100%);
   border: 1px solid rgba(255, 255, 255, 0.6);
-  border-radius: 24px;
+  border-radius: 20px;
   padding: clamp(2rem, 4vw, 3.5rem) clamp(2rem, 4vw, 3.5rem);
   
   /* Soft, warm shadows */
@@ -43,11 +47,14 @@
   
   display: flex;
   flex-direction: column;
-  will-change: transform, opacity, filter;
   transform-style: preserve-3d;
   cursor: pointer;
   user-select: none;
   overflow: hidden; /* For watermark */
+}
+
+.perspectiveContainer:hover .card {
+  will-change: transform;
 }
 
 /* Urdu Watermark */
@@ -124,6 +131,7 @@
   font-weight: 500;
   color: var(--color-ink);
   margin-bottom: 1.25rem;
+  text-wrap: balance;
 }
 
 .roleGroup {
@@ -150,6 +158,7 @@
   line-height: 1.7;
   color: var(--color-ink-muted);
   max-width: 32rem;
+  text-wrap: pretty;
 }
 
 /* Mobile Static Layout Overrides */
@@ -162,51 +171,51 @@
 
 @media (max-width: 768px) {
   .cardSwapWrapper {
+    width: 100%;
     height: auto;
-    min-height: auto;
+    min-height: 24rem;
     padding: 0;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 0.9rem;
   }
   
   .perspectiveContainer {
-    width: 100vw;
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    margin: 0;
-    padding: 1rem 5vw 3rem 5vw; /* 5vw left padding to anchor start */
+    width: min(86vw, 21rem);
+    margin: 0 auto;
     max-width: none;
-    height: auto;
+    height: 21rem;
     perspective: none;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: stretch;
-    gap: 4vw;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-padding: 0 5vw; /* Align snap to match padding */
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  .perspectiveContainer::-webkit-scrollbar {
-    display: none;
+    display: block;
+    overflow: visible;
   }
   
   .card {
-    position: relative;
-    flex: 0 0 82vw; /* Smaller width ensures next card peeks into viewport */
-    height: auto;
-    transform: none !important;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 20.5rem;
+    max-width: none;
     opacity: 1 !important;
     filter: none !important;
-    z-index: auto !important;
-    padding: 2.5rem 1.75rem; /* Slightly tighter padding for smaller card */
+    padding: 1.65rem 1.15rem;
     box-shadow: 0 20px 40px -10px rgba(177, 18, 59, 0.12), inset 0 1px 2px rgba(255, 255, 255, 0.9);
-    cursor: default;
-    scroll-snap-align: start; /* Snap to start rather than center */
-    border-radius: 28px;
-    scroll-snap-stop: always;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: transform 0.42s ease, opacity 0.24s ease, box-shadow 0.24s ease;
+  }
+
+  .card[data-is-front="true"] {
+    z-index: 3 !important;
+    transform: translate3d(-0.25rem, 0, 0) rotate(-1.2deg) scale(1) !important;
+  }
+
+  .card[data-is-front="false"] {
+    z-index: 2 !important;
+    opacity: 0.82 !important;
+    transform: translate3d(0.95rem, 0.95rem, 0) rotate(2.6deg) scale(0.93) !important;
+    box-shadow: 0 12px 30px -14px rgba(177, 18, 59, 0.16), inset 0 1px 2px rgba(255, 255, 255, 0.9);
   }
   
   .watermark {
@@ -218,9 +227,43 @@
     right: -2rem;
     transform: rotate(-10deg);
   }
+
+  .cardHeader {
+    margin-bottom: 1.5rem;
+  }
+
+  .cardBody {
+    margin-top: auto;
+  }
+
+  .cardIndex {
+    font-size: 0.92rem;
+  }
+
+  .categoryLabel {
+    font-size: 0.66rem;
+  }
   
   .doctorName {
-    font-size: clamp(2rem, 8vw, 2.8rem);
+    font-size: clamp(1.42rem, 6.4vw, 1.92rem);
+    margin-bottom: 0.9rem;
+  }
+
+  .doctorRole {
+    font-size: 1rem;
+  }
+
+  .doctorQuals,
+  .doctorDesc {
+    font-size: 0.86rem;
+  }
+
+  .doctorDesc {
+    line-height: 1.55;
+  }
+
+  .roleGroup {
+    margin-bottom: 1rem;
   }
 }
 
@@ -251,36 +294,48 @@
     filter: none !important;
     z-index: auto !important;
     cursor: default;
+    will-change: auto;
   }
 }
 
-.swipeHint {
+.mobileControls {
   display: none;
 }
 
 @media (max-width: 768px) {
-  .swipeHint {
+  .mobileControls {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 0.5rem;
-    margin-top: -1rem;
-    padding-bottom: 2rem;
+    gap: 0.45rem;
+    width: min(100%, 21rem);
+    margin-top: 0;
+    padding-bottom: 0;
     color: var(--color-ink-muted);
-    font-family: var(--font-sans), sans-serif;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    font-weight: 600;
-    opacity: 0.8;
   }
-  .swipeHint svg {
-    width: 16px;
-    height: 16px;
-    animation: swipePulse 2s infinite ease-in-out;
+
+  .mobileDot {
+    width: 2.4rem;
+    height: 0.42rem;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(177, 18, 59, 0.18);
+    cursor: pointer;
+    transition: width 0.18s ease, background-color 0.18s ease;
   }
-  @keyframes swipePulse {
-    0%, 100% { transform: translateX(0); }
-    50% { transform: translateX(8px); }
+
+  .mobileDotActive {
+    width: 3.1rem;
+    background: var(--color-cherry);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+
+  .mobileDot {
+    transition: none;
   }
 }

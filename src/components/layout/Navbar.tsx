@@ -73,7 +73,7 @@ export default function Navbar() {
         
         {/* Left: Logo */}
         <div className={styles.leftColumn}>
-          <Link href="#home" className={styles.logoLink} aria-label="Wasfa Diagnostic Centre — Home" onClick={() => setIsMenuOpen(false)}>
+          <Link href="/#home" className={styles.logoLink} aria-label="Wasfa Diagnostic Centre — Home" onClick={() => setIsMenuOpen(false)}>
             <Image
               src="/logo.png"
               alt=""

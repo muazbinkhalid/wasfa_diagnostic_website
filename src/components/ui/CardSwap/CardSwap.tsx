@@ -24,7 +24,8 @@ export default function CardSwap({ cards }: CardSwapProps) {
   
   // Track which card is in front
   const [frontIndex, setFrontIndex] = useState(0);
-  const [isMobileOrReducedMotion, setIsMobileOrReducedMotion] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [shouldReduceMotion, setShouldReduceMotion] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
 
@@ -53,9 +54,8 @@ export default function CardSwap({ cards }: CardSwapProps) {
 
   useEffect(() => {
     const checkViewport = () => {
-      const isMobile = window.innerWidth <= 768;
-      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      setIsMobileOrReducedMotion(isMobile || reducedMotion);
+      setIsMobile(window.innerWidth <= 768);
+      setShouldReduceMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
     };
 
     checkViewport();
@@ -65,7 +65,7 @@ export default function CardSwap({ cards }: CardSwapProps) {
 
   // Initialize side-by-side 50% spread layout
   useEffect(() => {
-    if (isMobileOrReducedMotion) {
+    if (isMobile || shouldReduceMotion) {
       if (timelineRef.current) timelineRef.current.kill();
       cardsRef.current.forEach((card) => {
         if (card) gsap.set(card, { clearProps: "all" });
@@ -84,11 +84,16 @@ export default function CardSwap({ cards }: CardSwapProps) {
       gsap.set(card1, { x: -60, y: 0, scale: 1, rotateY: 0, zIndex: 2 });
       gsap.set(card0, { x: 100, y: 10, scale: 0.95, rotateY: -2, zIndex: 1 });
     }
-  }, [isMobileOrReducedMotion, frontIndex]);
+  }, [isMobile, shouldReduceMotion, frontIndex]);
 
   const handleSwap = useCallback((clickedIndex: number) => {
-    if (isMobileOrReducedMotion) return;
+    if (shouldReduceMotion) return;
     if (clickedIndex === frontIndex) return;
+
+    if (isMobile) {
+      setFrontIndex(clickedIndex);
+      return;
+    }
 
     const frontCard = cardsRef.current[frontIndex];
     const backCard = cardsRef.current[clickedIndex];
@@ -126,10 +131,10 @@ export default function CardSwap({ cards }: CardSwapProps) {
     }, 0);
 
     setFrontIndex(clickedIndex);
-  }, [frontIndex, isMobileOrReducedMotion]);
+  }, [frontIndex, isMobile, shouldReduceMotion]);
 
   useEffect(() => {
-    if (isMobileOrReducedMotion) {
+    if (isMobile || shouldReduceMotion) {
       if (intervalRef.current) clearInterval(intervalRef.current);
       return;
     }
@@ -146,18 +151,18 @@ export default function CardSwap({ cards }: CardSwapProps) {
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, [isHovered, isVisible, isMobileOrReducedMotion, frontIndex, handleSwap]);
+  }, [isHovered, isVisible, isMobile, shouldReduceMotion, frontIndex, handleSwap]);
 
   const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
-      handleSwap(index);
+      if (!shouldReduceMotion) handleSwap(index);
     }
   };
 
   const handleMouseEnter = () => {
     setIsHovered(true);
-    if (isMobileOrReducedMotion) return;
+    if (isMobile || shouldReduceMotion) return;
     const backCard = cardsRef.current[frontIndex === 0 ? 1 : 0];
     if (backCard) {
       // Invite interaction by pushing the spread out a bit more
@@ -167,7 +172,7 @@ export default function CardSwap({ cards }: CardSwapProps) {
 
   const handleMouseLeave = () => {
     setIsHovered(false);
-    if (isMobileOrReducedMotion) return;
+    if (isMobile || shouldReduceMotion) return;
     const backCard = cardsRef.current[frontIndex === 0 ? 1 : 0];
     if (backCard) {
       gsap.to(backCard, { x: 100, rotateY: -2, duration: 0.4, ease: "power2.out" });
@@ -177,7 +182,7 @@ export default function CardSwap({ cards }: CardSwapProps) {
   return (
     <div className={styles.cardSwapWrapper}>
       <div 
-        className={styles.perspectiveContainer} 
+        className={`${styles.perspectiveContainer} ${isMobile && !shouldReduceMotion ? styles.mobileSwapContainer : ""}`} 
         ref={containerRef}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -185,7 +190,7 @@ export default function CardSwap({ cards }: CardSwapProps) {
         onBlur={() => setIsHovered(false)}
       >
         {cards.map((card, idx) => {
-          const isFront = isMobileOrReducedMotion ? true : idx === frontIndex;
+          const isFront = shouldReduceMotion ? true : idx === frontIndex;
           
           return (
             <article
@@ -195,12 +200,13 @@ export default function CardSwap({ cards }: CardSwapProps) {
                 cardsRef.current[idx] = el;
               }}
               data-is-front={isFront}
+              data-mobile-front={isMobile && isFront}
               onClick={() => handleSwap(idx)}
               onKeyDown={(e) => handleKeyDown(e, idx)}
-              tabIndex={isMobileOrReducedMotion ? undefined : 0}
-              role={isMobileOrReducedMotion ? "article" : "button"}
+              tabIndex={shouldReduceMotion ? undefined : 0}
+              role={shouldReduceMotion ? "article" : "button"}
               aria-label={
-                isMobileOrReducedMotion 
+                shouldReduceMotion 
                   ? `Profile of ${card.name}` 
                   : isFront 
                     ? `Profile of ${card.name}. Front card.` 
@@ -228,12 +234,18 @@ export default function CardSwap({ cards }: CardSwapProps) {
           );
         })}
       </div>
-      {isMobileOrReducedMotion && (
-        <div className={styles.swipeHint} aria-hidden="true">
-          <span>Swipe to explore</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
+      {isMobile && !shouldReduceMotion && (
+        <div className={styles.mobileControls} aria-label="Choose doctor profile">
+          {cards.map((card, idx) => (
+            <button
+              key={card.index}
+              type="button"
+              className={`${styles.mobileDot} ${idx === frontIndex ? styles.mobileDotActive : ""}`}
+              aria-label={`Show ${card.name}`}
+              aria-pressed={idx === frontIndex}
+              onClick={() => handleSwap(idx)}
+            />
+          ))}
         </div>
       )}
     </div>

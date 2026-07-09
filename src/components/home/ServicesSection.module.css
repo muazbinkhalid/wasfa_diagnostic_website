@@ -4,8 +4,9 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  padding: var(--section-padding) 0;
-  background: var(--color-canvas);
+  padding: clamp(4rem, 8vw, 7rem) 0;
+  background:
+    linear-gradient(180deg, var(--color-canvas) 0%, rgba(255, 253, 253, 0.8) 52%, var(--color-canvas) 100%);
 }
 
 .backgroundAtmosphere {
@@ -27,7 +28,7 @@
   z-index: 2;
   width: 100%;
   max-width: 84rem;
-  margin: 0 auto clamp(4rem, 8vw, 6rem) auto;
+  margin: 0 auto clamp(3rem, 7vw, 5rem) auto;
   padding: 0 clamp(1.5rem, 5vw, 4rem);
 }
 
@@ -82,9 +83,20 @@
   position: relative;
   z-index: 2;
   width: 100%;
+  border-block: 1px solid rgba(177, 18, 59, 0.08);
+  background: rgba(255, 253, 253, 0.3);
 }
 
 @media (max-width: 768px) {
+  .servicesSection {
+    padding: 4rem 0 3rem;
+  }
+
+  .introContainer {
+    margin-bottom: 2.25rem;
+    padding-inline: 1rem;
+  }
+
   .introArea {
     display: flex;
     flex-direction: column;
@@ -107,9 +119,12 @@
   
   .heading {
     text-align: center;
+    font-size: clamp(2.2rem, 11vw, 3.2rem);
   }
   
   .bodyCopy {
     text-align: center;
+    font-size: 1rem;
+    max-width: 22rem;
   }
 }

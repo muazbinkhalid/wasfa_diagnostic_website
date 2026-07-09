@@ -17,21 +17,40 @@ interface FlowingMenuProps {
 }
 
 export default function FlowingMenu({ items, speed = 20 }: FlowingMenuProps) {
+  const [activeIndex, setActiveIndex] = useState<string | null>(null);
+
   return (
     <div className={styles.menuWrap}>
       {items.map((item) => (
-        <FlowingMenuItem key={item.index} item={item} speed={speed} />
+        <FlowingMenuItem
+          key={item.index}
+          item={item}
+          speed={speed}
+          isActive={activeIndex === item.index}
+          onActivate={() => setActiveIndex((current) => current === item.index ? null : item.index)}
+        />
       ))}
     </div>
   );
 }
 
-function FlowingMenuItem({ item, speed }: { item: ServiceItem; speed: number }) {
+function FlowingMenuItem({
+  item,
+  speed,
+  isActive,
+  onActivate,
+}: {
+  item: ServiceItem;
+  speed: number;
+  isActive: boolean;
+  onActivate: () => void;
+}) {
   const itemRef = useRef<HTMLAnchorElement>(null);
   const marqueeWrapRef = useRef<HTMLDivElement>(null);
   const marqueeInnerRef = useRef<HTMLDivElement>(null);
   const marqueePartRef = useRef<HTMLDivElement>(null);
   const tweenRef = useRef<gsap.core.Tween | null>(null);
+  const activeStateRef = useRef(false);
 
   const [repetitions, setRepetitions] = useState(4);
 
@@ -62,6 +81,31 @@ function FlowingMenuItem({ item, speed }: { item: ServiceItem; speed: number }) 
       clearTimeout(resizeTimeout);
     };
   }, []);
+
+  useEffect(() => {
+    activeStateRef.current = isActive;
+
+    const wrap = marqueeWrapRef.current;
+    if (!wrap) return;
+
+    if (isActive) {
+      if (tweenRef.current) tweenRef.current.play();
+      gsap.to(wrap, {
+        clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+        duration: 0.35,
+        ease: "power3.out",
+        overwrite: true,
+      });
+    } else {
+      if (tweenRef.current) tweenRef.current.pause();
+      gsap.to(wrap, {
+        clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)",
+        duration: 0.28,
+        ease: "power3.out",
+        overwrite: true,
+      });
+    }
+  }, [isActive]);
 
   useEffect(() => {
     const inner = marqueeInnerRef.current;
@@ -127,6 +171,7 @@ function FlowingMenuItem({ item, speed }: { item: ServiceItem; speed: number }) 
       observer.observe(el);
 
       const handleMouseEnter = (e: MouseEvent) => {
+        if (window.matchMedia("(hover: none), (pointer: coarse)").matches) return;
         isHovered = true;
         if (isVisible && tweenRef.current) tweenRef.current.play();
         const enterFromTop = getEnterFromTop(e);
@@ -138,6 +183,7 @@ function FlowingMenuItem({ item, speed }: { item: ServiceItem; speed: number }) 
       };
 
       const handleMouseLeave = (e: MouseEvent) => {
+        if (window.matchMedia("(hover: none), (pointer: coarse)").matches) return;
         isHovered = false;
         if (tweenRef.current) tweenRef.current.pause();
         const leaveFromTop = getEnterFromTop(e);
@@ -156,6 +202,7 @@ function FlowingMenuItem({ item, speed }: { item: ServiceItem; speed: number }) 
       };
 
       const handleBlur = () => {
+        if (activeStateRef.current) return;
         isHovered = false;
         if (tweenRef.current) tweenRef.current.pause();
         gsap.to(wrap, { clipPath: clipTop, duration: 0.5, ease: "power3.out", overwrite: true });
@@ -192,11 +239,15 @@ function FlowingMenuItem({ item, speed }: { item: ServiceItem; speed: number }) 
     <a
       ref={itemRef}
       href={item.href || "#"}
-      className={styles.menuItem}
+      className={`${styles.menuItem} ${isActive ? styles.menuItemActive : ""}`}
       role={!item.href ? "button" : undefined}
       tabIndex={0}
+      aria-pressed={!item.href ? isActive : undefined}
       onClick={(e) => {
-        if (!item.href) e.preventDefault();
+        if (!item.href || window.matchMedia("(hover: none), (pointer: coarse)").matches) {
+          e.preventDefault();
+          onActivate();
+        }
       }}
     >
       <div className={styles.itemGrid}>

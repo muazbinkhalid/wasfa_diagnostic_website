@@ -5,8 +5,9 @@
   display: flex;
   justify-content: center;
   min-height: max(40rem, 80svh);
-  padding: var(--section-padding) clamp(1rem, 4vw, 3rem);
-  background: var(--color-canvas);
+  padding: clamp(4rem, 8vw, 7rem) clamp(1rem, 4vw, 3rem);
+  background:
+    linear-gradient(180deg, var(--color-canvas) 0%, rgba(255, 253, 253, 0.76) 50%, var(--color-canvas) 100%);
 }
 
 .backgroundAtmosphere {
@@ -40,7 +41,7 @@
   display: grid;
   grid-template-columns: minmax(28rem, 1.2fr) minmax(0, 0.9fr);
   align-items: center;
-  gap: clamp(2.5rem, 6vw, 6rem);
+  gap: clamp(2.5rem, 5vw, 5rem);
 }
 
 .introColumn {
@@ -124,12 +125,18 @@
 
   .rightColumn {
     justify-content: center;
+    width: 100%;
   }
 }
 
 @media (max-width: 640px) {
   .doctorsSection {
     min-height: auto;
+    padding: 4rem 0 3rem;
+  }
+
+  .container {
+    width: 100%;
   }
 
   .introColumn {
@@ -137,6 +144,7 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+    padding-inline: 1rem;
   }
 
   .sectionLabel {
@@ -153,6 +161,7 @@
 
   .heading {
     text-align: center;
+    font-size: clamp(2.25rem, 11vw, 3.4rem);
   }
 
   .introColumn::after {
@@ -165,5 +174,12 @@
   .bodyCopy {
     text-align: center;
     line-height: 1.72;
+    font-size: 1rem;
+    max-width: 22rem;
+  }
+
+  .rightColumn {
+    width: 100%;
+    justify-content: center;
   }
 }
